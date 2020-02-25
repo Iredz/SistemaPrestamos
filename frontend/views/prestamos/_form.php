@@ -19,9 +19,10 @@ use frontend\models\Periodos;
 
 <div class="prestamos-form">
 
+
     <?php $form = ActiveForm::begin(['id' => 'dynamic-form']); ?>
 
-    
+
 
     <?=$form->field($model, 'noControlAlumno')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Alumnos::find()->all(),'noControl','noControl'),
@@ -35,7 +36,7 @@ use frontend\models\Periodos;
 
     <?= $form->field($model, 'nombreAlumno')->textInput(['maxlength' => true]) ?>
 
-    
+
 
     <?=$form->field($model, 'materiaID')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Materias::find()->all(),'materiaID','materiaNombre'),
@@ -47,7 +48,7 @@ use frontend\models\Periodos;
     ]);
     ?>
 
-   
+
 
     <?=$form->field($model, 'docenteID')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Docentes::find()->all(),'docenteID','docenteNombre'),
@@ -64,15 +65,16 @@ use frontend\models\Periodos;
     <?= $form->field($model, 'periodo')->dropDownList
     (ArrayHelper::map(Periodos::find()->all(),'periodoNombre','periodoNombre'),['prompt'=>'ELIGA PERIODO'])?>
 
-<?= $form->field($model, 'fecha')->widget(DatePicker::class, [
+    <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
         'language' => 'es',
         'dateFormat' => 'yyyy-MM-dd',
-    ]		) ?>
+        ]) 
+    ?>
 
 
-    <div class="row">
-
-<div class="panel panel-default">
+   <div class="rows">
+   
+   <div class="panel panel-default">
     <div class="panel-heading"><h4><i class="glyphicon glyphicon-th-list"></i>Material Didáctico</h4></div>
     <div class="panel-body">
         <?php DynamicFormWidget::begin([
@@ -128,7 +130,8 @@ use frontend\models\Periodos;
         <?php DynamicFormWidget::end(); ?>
     </div>
 </div>
-</div>
+
+   </div>
 
     <?= $form->field($model, 'observaciones')->textarea(['rows' => 6]) ?>
 
@@ -153,10 +156,10 @@ use frontend\models\Periodos;
 
 <?php
 $script = <<< JS
-    $('#noCon').change(function(){
-    var noControl = $(this).val();
+$('#noCon').change(function(){
+   var noControl = $(this).val();
    
-    $.get('index.php?r=alumnos/get-nombre-alumno',{ noControl : noControl },function(data) {
+   $.get('index.php?r=alumnos/get-nombre-alumno',{ noControl : noControl },function(data) {
         var data= $.parseJSON(data);
        
         // Al ingresar un numero de control en el campo "No. Control", el campo "Nombre de Alumno"
@@ -166,51 +169,6 @@ $script = <<< JS
    
 });
 
-
-$("#materiales-0-matid").change(function() {
-       
-    let materialid = $("#materiales-0-matid").val();
-    if(materialid.length != "") {
-        $.post("http://localhost/sistemaprestamos/frontend/controllers/material.php", { materialID: materialid }, function(data) {
-            let name = JSON.parse(data);
-            console.log(name.descrMat);
-            $("#materiales-0-materialnombre").attr('value', name.descrMat);
-        });
-
-        
-    } 
-       
-
-   });
-
-   $("#materiales-1-matid").focusout(function() {
-       
-       let nuevo = $("#materiales-1-matid").val();
-       if(nuevo.length != "") {
-           $.post("http://localhost/sistemaprestamos/frontend/controllers/material.php", { materialID: nuevo }, function(data) {
-               let name = JSON.parse(data);
-               console.log(name.descrMat);
-               $("#materiales-1-materialnombre").attr('value', name.descrMat);
-           });
-   
-           
-       } 
-          
-   
-      });
-
- /* var inputs = document.getElementsByClassName("form-group");
-   for(let i = 0; i < inputs.length; i++){
-       if(i == 1 || i == 8) {
-           inputs[i].style.display = "none";
-       }
-   } */
-
 JS;
 $this->registerJS($script);
 ?>
-
-
-
-
-
