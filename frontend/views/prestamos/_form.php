@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\jui\DatePicker;
 use kartik\select2\Select2;
 use wbraganca\dynamicform\DynamicFormWidget;
+use frontend\models\Inventario;
 use frontend\models\Docentes;
 use frontend\models\Alumnos;
 use frontend\models\Materias;
@@ -24,15 +26,10 @@ use frontend\models\Periodos;
 
 
 
-    <?=$form->field($model, 'noControlAlumno')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Alumnos::find()->all(),'noControl','noControl'),
-        'language' => 'es',
-        'options' => ['placeholder' => ' No. CONTROL ...','id'=>'noCon'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]);
-    ?>
+
+    <?= $form->field($model, 'noControlAlumno')->textInput(['maxlength' => true]) ?>
+
+
 
     <?= $form->field($model, 'nombreAlumno')->textInput(['maxlength' => true]) ?>
 
@@ -154,21 +151,87 @@ use frontend\models\Periodos;
 </div>
 
 
-<?php
-$script = <<< JS
-$('#noCon').change(function(){
-   var noControl = $(this).val();
-   
-   $.get('index.php?r=alumnos/get-nombre-alumno',{ noControl : noControl },function(data) {
-        var data= $.parseJSON(data);
+<script type="text/javascript">
+
+    
+    $("#prestamos-nocontrolalumno").change(function(){
+        var noControl = $(this).val();
+      
        
-        // Al ingresar un numero de control en el campo "No. Control", el campo "Nombre de Alumno"
-        //  se le atribuye el nombre del alumno correspondiente a ese numero de control
-        $('#prestamos-nombrealumno').attr('value',data.alumnoNombre);
-   });
+        $.get("<?= Url::to(['alumnos/get-nombre-alumno']);?>",{noControl : noControl},function (data){
+            var data = $.parseJSON(data);
+
+            if (data !== null){
+                $("#prestamos-nombrealumno").val(data.alumnoNombre);
+                console.log(data.alumnoNombre);
+            }else {
+                alert('Alumno no se encuentra en la base de datos');
+            }
+        });
+
+    });
+
+    $("#materiales-0-matid").change(function(){
+        var matID = $(this).val();
+      
+       
+        $.get("<?= Url::to(['inventario/get-nombre-material']);?>",{matID : matID},function (data){
+            var data = $.parseJSON(data);
+
+            if (data !== null){
+                $("#materiales-0-materialnombre").val(data.descrMat);
+                console.log(data.matID);
+                console.log(data.descrMat)
+            }else {
+                alert('Material no encontrado en la base de datos');
+            }
+        });
+
+    });
+
    
+    
+
+   
+
+</script>
+
+
+
+
+
+<?php
+
+
+$script1 = <<< JS
+
+
+$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
+    console.log("beforeInsert");
 });
 
+$(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+    console.log("afterInsert");
+});
+
+$(".dynamicform_wrapper").on("beforeDelete", function(e, item) {
+    if (! confirm("¿Eliminar campos?")) {
+        return false;
+    }
+    return true;
+});
+
+$(".dynamicform_wrapper").on("afterDelete", function(e) {
+    console.log("Eliminado!");
+});
+
+$(".dynamicform_wrapper").on("limitReached", function(e, item) {
+    alert("Límite de campos alcanzado");
+});
+
+
 JS;
-$this->registerJS($script);
+$this->registerJS($script1);
+
+
 ?>

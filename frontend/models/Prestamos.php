@@ -35,8 +35,8 @@ class Prestamos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['noControlAlumno', 'nombreAlumno', 'materiaID', 'docenteID', 'periodo', 'entregaNombre'], 'required'],
-            [['noControlAlumno', 'docenteID'], 'integer'],
+            [['noControlAlumno', 'nombreAlumno', 'docenteID', 'periodo', 'entregaNombre'], 'required'],
+            [['noControlAlumno', 'docenteID','materiaID'], 'integer'],
             [['fecha'], 'safe'],
             [['observaciones'], 'string'],
             [['nombreAlumno', 'materiaID'], 'string', 'max' => 50],
@@ -51,14 +51,14 @@ class Prestamos extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'noControlAlumno' => 'No Control Alumno',
-            'nombreAlumno' => 'Nombre Alumno',
-            'materiaID' => 'Materia ID',
-            'docenteID' => 'Docente ID',
+            'noControlAlumno' => 'No. Control del Alumno',
+            'nombreAlumno' => 'Nombre del Alumno',
+            'materiaID' => 'Materia',
+            'docenteID' => 'Docente',
             'periodo' => 'Periodo',
             'fecha' => 'Fecha',
             'observaciones' => 'Observaciones',
-            'entregaNombre' => 'Entrega Nombre',
+            'entregaNombre' => 'Nombre de quien entrega material',
         ];
     }
 

@@ -7,6 +7,8 @@ use frontend\models\Alumnos;
 use frontend\models\AlumnosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\Html;
+use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
 
@@ -132,4 +134,6 @@ class AlumnosController extends Controller
         $alumno = Alumnos::findOne($noControl);
         echo Json::encode($alumno);
     }
+
+    
 }
