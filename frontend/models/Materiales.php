@@ -44,8 +44,8 @@ class Materiales extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'matID' => 'Mat ID',
-            'materialNombre' => 'Material Nombre',
+            'matID' => 'ID del material',
+            'materialNombre' => 'Nombre del Material',
             'prest_id' => 'Prest ID',
         ];
     }

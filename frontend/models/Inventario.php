@@ -48,12 +48,12 @@ class Inventario extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'matID' => 'ID del Material',
-            'descrMat' => 'Descripción del Material',
+            'matID' => 'ID del material',
+            'descrMat' => 'Descripción del material',
             'marca' => 'Marca',
             'modelo' => 'Modelo',
             'serie' => 'Serie',
-            'noInventario' => 'No de Inventario',
+            'noInventario' => 'No de inventario',
             'estatus' => 'Estatus',
         ];
     }

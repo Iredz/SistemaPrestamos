@@ -150,8 +150,9 @@ class InventarioController extends Controller
 
     public function actionGetNombreMaterial ($matID)
     {
-        //busca ID del material de en la tabla Inventario y lo codifica en formato JSON
+        // Busca el ID del material ingresado en el campo "ID del Material" en la tabla Inventario
         $inventario = Inventario::findOne($matID);
+        // Codifica en formato JSON al encontrarlo
         echo Json::encode($inventario);
     }
 }
