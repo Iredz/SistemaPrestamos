@@ -46,9 +46,9 @@ class Devoluciones extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'alumnoNoControl' => 'No. de control del Alumno',
-            'alumnoNombre' => 'Nombre del Alumno',
-            'recibeNombre' => 'Nombre de quien recibe material',
+            'alumnoNoControl' => 'Alumno No Control',
+            'alumnoNombre' => 'Alumno Nombre',
+            'recibeNombre' => 'Recibe Nombre',
             'observaciones' => 'Observaciones',
         ];
     }

@@ -45,8 +45,7 @@ use frontend\models\Periodos;
                     });
 
         ']);
-    
-    
+
     ?>
 
 
@@ -80,7 +79,9 @@ use frontend\models\Periodos;
 
 
     <?= $form->field($model, 'periodo')->dropDownList
-    (ArrayHelper::map(Periodos::find()->all(),'periodoNombre','periodoNombre'),['prompt'=>'ELIGA PERIODO'])?>
+    (ArrayHelper::map(Periodos::find()->all(),'periodoNombre','periodoNombre'),
+        ['prompt'=>'ELIGA PERIODO'])
+    ?>
 
     <?= $form->field($model, 'fecha')->widget(DatePicker::class, [
         'language' => 'es',
@@ -95,13 +96,13 @@ use frontend\models\Periodos;
     <div class="panel-heading"><h4><i class="glyphicon glyphicon-th-list"></i>Material Didáctico</h4></div>
     <div class="panel-body">
         <?php DynamicFormWidget::begin([
-            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-            'widgetBody' => '.container-items', // required: css class selector
-            'widgetItem' => '.item', // required: css class
-            'limit' => 8, // the maximum times, an element can be cloned (default 999)
-            'min' => 1, // 0 or 1 (default 1)
-            'insertButton' => '.add-item', // css class
-            'deleteButton' => '.remove-item', // css class
+            'widgetContainer' => 'dynamicform_wrapper', // requerido: solo carácteres alfanuméricos mas "_" [A-Za-z0-9_]
+            'widgetBody' => '.container-items', // requerido: clase selector css
+            'widgetItem' => '.item', // requerido: clase css
+            'limit' => 8, // Numero maximo de veces que un elemento puede ser clonado (predeterminado 999)
+            'min' => 1, // 0 o 1 (predeterminado 1)
+            'insertButton' => '.add-item', // clase css
+            'deleteButton' => '.remove-item', // clase css
             'model' => $modelsMateriales[0],
             'formId' => 'dynamic-form',
             'formFields' => [
@@ -124,7 +125,7 @@ use frontend\models\Periodos;
                     </div>
                     <div class="panel-body">
                         <?php
-                        // necessary for update action.
+                        // necesario para la acción de actualización.
                         if (! $modelMateriales->isNewRecord) {
                             echo Html::activeHiddenInput($modelMateriales, "[{$i}]id");
                         }
@@ -133,16 +134,12 @@ use frontend\models\Periodos;
                         <div class="row">
                             <div class="col-sm-6">
                             
-                                <?= $form->field($modelMateriales, "[{$i}]matID")->textInput(['maxlength' => true,
-                                  'id'=>'MATID'
-                                ]);?>
+                                <?= $form->field($modelMateriales, "[{$i}]matID")->textInput(['maxlength' => true]);?>
                                 
                               
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($modelMateriales, "[{$i}]materialNombre")->textInput(['maxlength' => true,
-                                    'id'=>'MATNOM'
-                                    ]);?>
+                                <?= $form->field($modelMateriales, "[{$i}]materialNombre")->textInput(['maxlength' => true]);?>
                             </div>
                         </div><!-- .row -->
 
@@ -179,7 +176,7 @@ use frontend\models\Periodos;
 
 $script0 = <<< JS
 
-$("#MATID").on('change',function(){
+$("#materiales-0-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             console.log(data);
@@ -191,13 +188,10 @@ $("#MATID").on('change',function(){
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM").val(data.descrMat);
+                    $("#materiales-0-materialnombre").val(data.descrMat);
                 }
             }
-
-        
-      
-       
+                  
      
         });
 
@@ -223,7 +217,7 @@ $(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
 $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     console.log("afterInsert")
     
-    $("#MATID0").on('change',function(){
+    $("#materiales-0-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -237,7 +231,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM0").val(data.descrMat);
+                    $("#materiales-0-materialnombre").val(data.descrMat);
                 }
             }
         
@@ -248,35 +242,10 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID-0-0").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM-0-0").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
+    
     
 
-    $("#MATID1").on('change',function(){
+    $("#materiales-1-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -290,7 +259,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM1").val(data.descrMat);
+                    $("#materiales-1-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -303,7 +272,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID-1-1").on('change',function(){
+    $("#materiales-2-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -317,7 +286,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM-1-1").val(data.descrMat);
+                    $("#materiales-2-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -330,7 +299,9 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID2").on('change',function(){
+    
+
+    $("#materiales-3-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -344,7 +315,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM2").val(data.descrMat);
+                    $("#materiales-3-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -357,7 +328,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID-2-2").on('change',function(){
+   
+    $("#materiales-4-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -371,7 +343,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM-2-2").val(data.descrMat);
+                    $("#materiales-4-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -384,7 +356,10 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID3").on('change',function(){
+    
+
+
+    $("#materiales-5-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -398,7 +373,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM3").val(data.descrMat);
+                    $("#materiales-5-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -411,7 +386,9 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID-3-3").on('change',function(){
+    
+
+    $("#materiales-6-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -425,7 +402,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM-3-3").val(data.descrMat);
+                    $("#materiales-6-materialnombre").val(data.descrMat);
 
                 }
             }
@@ -438,7 +415,9 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 
     });
 
-    $("#MATID4").on('change',function(){
+   
+
+    $("#materiales-7-matid").on('change',function(){
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
             var data = $.parseJSON(data);
             
@@ -452,196 +431,7 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
                 }else if (data.estatus == 'B'){
                     alert("Material dado de baja");
                 }else{
-                    $("#MATNOM4").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID-4-4").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM-4-4").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID5").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM5").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID-5-5").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM-5-5").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID6").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM6").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID-6-6").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM-6-6").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID7").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM7").val(data.descrMat);
-
-                }
-            }
-
-        
-      
-       
-     
-        });
-
-    });
-
-    $("#MATID-7-7").on('change',function(){
-        $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
-            var data = $.parseJSON(data);
-            
-
-            console.log(data);
-            if (data == null){
-                alert("Material Inexistente");
-            }else{
-                if (data.estatus == 'P'){
-                    alert("Material en prestamo");
-                }else if (data.estatus == 'B'){
-                    alert("Material dado de baja");
-                }else{
-                    $("#MATNOM-7-7").val(data.descrMat);
+                    $("#materiales-7-materialnombre").val(data.descrMat);
 
                 }
             }

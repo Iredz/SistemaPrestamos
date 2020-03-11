@@ -30,7 +30,7 @@ class MaterialDevuelto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['matID', 'materialNombre', 'dev_id'], 'required'],
+            [['matID', 'materialNombre'], 'required'],
             [['matID', 'dev_id'], 'integer'],
             [['materialNombre'], 'string', 'max' => 50],
             [['dev_id'], 'exist', 'skipOnError' => true, 'targetClass' => Devoluciones::className(), 'targetAttribute' => ['dev_id' => 'id']],

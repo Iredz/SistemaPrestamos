@@ -71,12 +71,15 @@ class PrestamosController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save())
         {
-
+            /*
+             * Se hace uso del  modelo "Model.php" , para el manejo
+             * múltiple de elementos
+            */
             $modelsMateriales = Model::createMultiple(Materiales::classname());
             Model::loadMultiple($modelsMateriales, Yii::$app->request->post());
 
         
-            // validate all models
+            // validar los modelos
             $valid = $model->validate();
             $valid = Model::validateMultiple($modelsMateriales) && $valid;
             
@@ -157,6 +160,6 @@ class PrestamosController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('La página requerida no existe.');
     }
 }

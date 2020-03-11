@@ -130,7 +130,10 @@ class AlumnosController extends Controller
 
     public function actionGetNombreAlumno ($noControl)
     {
-        //busca No. de Control de en la tabla Alumnos
+        /*
+            Busca No. de Control de en la tabla Alumnos,
+            y codifica todos los datos pertientes al alumno en cuestión en formato JSON
+        */
         $alumno = Alumnos::findOne($noControl);
         echo Json::encode($alumno);
     }

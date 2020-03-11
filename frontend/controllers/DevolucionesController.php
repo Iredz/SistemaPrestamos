@@ -2,10 +2,11 @@
 
 namespace frontend\controllers;
 
-use frontend\models\MaterialDevuelto;
 use Yii;
 use frontend\models\Devoluciones;
 use frontend\models\DevolucionesSearch;
+use frontend\models\MaterialDevuelto;
+use frontend\models\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -66,9 +67,43 @@ class DevolucionesController extends Controller
     public function actionCreate()
     {
         $model = new Devoluciones();
-        $modelsMaterialDevuelto = [new MaterialDevuelto()];
+        $modelsMaterialDevuelto = [new MaterialDevuelto];
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            /*
+             * Se hace uso del  modelo "Model.php" , para el manejo
+             * múltiple de elementos
+            */
+            $modelsMaterialDevuelto = Model::createMultiple(MaterialDevuelto::classname());
+            Model::loadMultiple($modelsMaterialDevuelto, Yii::$app->request->post());
+
+
+            // validar los modelos
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($modelsMaterialDevuelto) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($modelsMaterialDevuelto as $modelMaterialDevuelto) {
+                            $modelMaterialDevuelto->dev_id = $model->id;
+                            if (! ($flag = $modelMaterialDevuelto->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+
+            }
+
         }
 
         return $this->render('create', [

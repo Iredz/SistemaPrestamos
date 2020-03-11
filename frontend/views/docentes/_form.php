@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -22,15 +21,13 @@ use frontend\models\Carreras;
         'language' => 'es',
         'options' => ['placeholder' => 'ELIGA CARRERA ...'],
         'pluginOptions' => [
-            'allowClear' => true
-        ],
+            'allowClear' => true],
     ]);
     ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>

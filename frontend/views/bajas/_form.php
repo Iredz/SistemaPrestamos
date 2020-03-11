@@ -18,15 +18,26 @@ use frontend\models\Inventario;
 
 
 
-    <?=$form->field($model, 'matID')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Inventario::find()->all(),'matID','matID'),
-        'language' => 'es',
-        'options' => ['placeholder' => ' ID del Material ...','id'=>'idMAT'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]);
-    ?>
+
+
+    <?= $form->field($model, 'matID')->textInput(['maxlength' => true,
+        'onchange'=>'
+
+                
+                     $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
+                        var data = $.parseJSON(data);
+                        if (data !== null) {
+                        
+
+                        
+                        $("#bajas-descrmat").val(data.descrMat);
+                        }else {
+                            alert("Material no registrado");
+                        }
+                    });
+
+        '
+        ]) ?>
 
     <?= $form->field($model, 'descrMat')->textInput(['maxlength' => true]) ?>
 
