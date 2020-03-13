@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model frontend\models\Inventario */
 
 $this->title = $model->descrMat;
+
 $this->params['breadcrumbs'][] = ['label' => 'Listado de Inventario', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -17,13 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Actualizar', ['update', 'id' => $model->matID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Borrar', ['delete', 'id' => $model->matID], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Está seguro que lo quiere borrar?',
-                'method' => 'post',
-            ],
-        ]) ?>
+      
     </p>
 
     <?= DetailView::widget([

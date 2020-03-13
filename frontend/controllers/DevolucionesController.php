@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Devoluciones;
 use frontend\models\DevolucionesSearch;
 use frontend\models\MaterialDevuelto;
+use frontend\models\MaterialDevueltoSearch;
 use frontend\models\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -54,8 +55,28 @@ class DevolucionesController extends Controller
      */
     public function actionView($id)
     {
+
+     /*
+        $model = $this->findModel($id);
+        $modelsMaterialDevuelto=$model->materialdevuelto;
+
+        $searchModel = new MaterialDevueltoSearch();
+        $searchModel->dev_id= $model ->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+*/
         return $this->render('view', [
             'model' => $this->findModel($id),
+            
+        /*
+        'model'=>$model,
+        'materialdevuelto'=> $materialdevuelto,
+        'searchModel'=> $searchModel,
+        'dataProvider'=> $dataProvider,
+        
+        */
+
+
+
         ]);
     }
 

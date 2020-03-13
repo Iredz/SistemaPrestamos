@@ -46,11 +46,11 @@ class Bajas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'bajaID' => 'Baja ID',
-            'matID' => 'Mat ID',
-            'descrMat' => 'Descr Mat',
-            'razon' => 'Razon',
-            'bajaFecha' => 'Baja Fecha',
+            'bajaID' => 'ID de Baja',
+            'matID' => 'ID del Material',
+            'descrMat' => 'Descripción del Material',
+            'razon' => 'Razón',
+            'bajaFecha' => 'Fecha dado de baja',
         ];
     }
 

@@ -2,8 +2,9 @@
 
 use yii\helpers\Html;
 use frontend\models\MaterialesSearch;
+use yii\grid\GridView;
 
-use kartik\grid\GridView;
+
 
 
 
@@ -29,22 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             [
-            'class' => 'kartik\grid\ExpandRowColumn',
-            'value' => function ($model,$key,$index,$column){
-                return GridView::ROW_COLLAPSED;
-            },
-
-            'detail'=> function($model,$key,$index,$column){
-                $searchModel = new MaterialesSearch();
-                $searchModel->prest_id= $model ->id;
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-                return Yii::$app->controller->renderPartial('_materiales',[
-                    'searchModel' =>$searchModel,
-                    'dataProvider' => $dataProvider,
-                ]);
-            },
-            ],
+            'class' => 'yii\grid\SerialColumn'],
             
 
         

@@ -37,8 +37,8 @@ class Carreras extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'carreraID' => 'Carrera ID',
-            'carreraNombre' => 'Carrera Nombre',
+            'carreraID' => 'ID de Carrera',
+            'carreraNombre' => 'Nombre de Carrera',
         ];
     }
 }

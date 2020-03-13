@@ -6,6 +6,7 @@ use Yii;
 use frontend\models\Prestamos;
 use frontend\models\PrestamosSearch;
 use frontend\models\Materiales;
+use frontend\models\MaterialesSearch;
 use frontend\models\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -65,8 +66,22 @@ class PrestamosController extends Controller
         if(Yii::$app->user->can('modificarPrestamos'))
         {
 
+            $model = $this->findModel($id);
+            $modelsMateriales= $model->materiales;
+
+            $searchModel = new MaterialesSearch();
+            $searchModel->prest_id= $model ->id;
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
             return $this->render('view', [
-                'model' => $this->findModel($id),
+                //'model' => $this->findModel($id),
+                'model' => $model,
+                
+                'modelsMateriales'=>$modelsMateriales,
+                'searchModel' =>$searchModel,
+                'dataProvider' => $dataProvider,
+
+                
             ]);
         }
 

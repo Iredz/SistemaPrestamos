@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'alumnoNombre',
             'alumnoCarreraNombre',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn','template' =>'{view}'],
         ],
     ]); ?>
 

@@ -1,7 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\Pjax;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 
 /* @var $this yii\web\View */
@@ -16,16 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Actualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Está seguro de borrarlo?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+ 
 
     <?= DetailView::widget([
         'model' => $model,
@@ -69,5 +62,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]) ?>
+
+    <?php Pjax::begin()?>
+
+    <?= GridView::widget([
+        'dataProvider'=>$dataProvider,
+        // 'filterModel'=> $searchModel,
+        'columns'=>[
+            //   ['class'=>'yii\grid\SerialColumn'],
+            'matID',
+            'materialNombre',
+        ],
+
+
+    ]);?>
+
+    <?php Pjax::end();?>
 
 </div>

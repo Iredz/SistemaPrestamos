@@ -67,6 +67,7 @@ class MateriasController extends Controller
             ]);
         }   
         throw new NotFoundHttpException('Favor de Iniciar Sesión');
+        
     }
 
     /**
@@ -117,6 +118,7 @@ class MateriasController extends Controller
             ]);
         }
         throw new NotFoundHttpException('Favor de Iniciar Sesión');
+        
     }
 
     /**
@@ -149,7 +151,7 @@ class MateriasController extends Controller
     protected function findModel($id)
     {
 
-        if(Yii::$app->user->can('modificarMateriass'))
+        if(Yii::$app->user->can('modificarMaterias'))
         {
 
             if (($model = Materias::findOne($id)) !== null) {
