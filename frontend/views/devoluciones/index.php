@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'alumnoNoControl',
             'alumnoNombre',
             'recibeNombre',
-            'observaciones:ntext',
+            //'observaciones:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
