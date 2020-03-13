@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use frontend\models\Docentes;
+
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Prestamos */

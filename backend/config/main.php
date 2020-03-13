@@ -14,6 +14,7 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
