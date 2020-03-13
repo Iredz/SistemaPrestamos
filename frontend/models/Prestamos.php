@@ -71,4 +71,22 @@ class Prestamos extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Materiales::className(), ['prest_id' => 'id']);
     }
+
+    public function getDocentenom()
+
+    {
+
+        return $this->hasOne(Docentes::className(), ['docenteID' => 'docenteID']);
+
+    }
+
+    public function getMaterianom()
+
+    {
+
+        return $this->hasOne(Materias::className(), ['materiaID' => 'materiaID']);
+
+    }
+
+
 }

@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\PrestamosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -15,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Prestamos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Procesar Prestamo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -26,17 +28,44 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'noControlAlumno',
-            'nombreAlumno',
-            'materiaID',
-            'docenteID',
-            //'periodo',
-            //'fecha',
-            //'observaciones:ntext',
-            //'entregaNombre',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                    'attribute' => 'id',
+                    'label' => ''
+            ],
+
+            [
+                    'attribute' => 'noControlAlumno',
+                    'label' => 'No. control'
+            ],
+
+            'nombreAlumno',
+
+            [
+                'attribute'=>'materiaID',
+                'label'=> 'Materia',
+                'value' =>'materianom.materiaNombre',
+
+
+            ],
+            [
+                    'attribute'=>'docenteID',
+                    'label'=> 'Docente',
+                    'value' =>'docentenom.docenteNombre',
+
+
+            ],
+            //'periodo',
+            'fecha',
+
+            //'observaciones:ntext',
+
+            [
+                    'attribute' => 'entregaNombre',
+                    'label'=> 'Entregó'
+            ],
+
+            ['class' => 'yii\grid\ActionColumn','template' =>'{view}'],
         ],
     ]); ?>
 

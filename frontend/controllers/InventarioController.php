@@ -38,7 +38,7 @@ class InventarioController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarInventario'))
         {
         $searchModel = new InventarioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -49,6 +49,7 @@ class InventarioController extends Controller
         ]);
 
         }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -59,13 +60,14 @@ class InventarioController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarInventario'))
         {
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
 
         }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -75,7 +77,7 @@ class InventarioController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarInventario'))
         {
         $model = new Inventario();
 
@@ -88,6 +90,7 @@ class InventarioController extends Controller
         ]);
 
         }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -99,7 +102,7 @@ class InventarioController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarInventario'))
         {
         $model = $this->findModel($id);
 
@@ -112,6 +115,7 @@ class InventarioController extends Controller
         ]);
 
         }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -123,13 +127,14 @@ class InventarioController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarInventario'))
         {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
 
         }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -145,14 +150,18 @@ class InventarioController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     public function actionGetNombreMaterial ($matID)
     {
-        // Busca el ID del material ingresado en el campo "ID del Material" en la tabla Inventario
+        // Busca los registros del material con el ID que iguale
+        //  al ingresado en el campo "ID del Material" en la tabla Inventario
         $inventario = Inventario::findOne($matID);
         // Codifica en formato JSON al encontrarlo
         echo Json::encode($inventario);
     }
 }
+
+
+

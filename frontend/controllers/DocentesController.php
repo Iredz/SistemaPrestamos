@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Docentes;
 use frontend\models\DocentesSearch;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,13 +36,17 @@ class DocentesController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new DocentesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('modificarDocentes'))
+        {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new DocentesSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
@@ -64,15 +69,19 @@ class DocentesController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Docentes();
+        if(Yii::$app->user->can('modificarDocentes'))
+        {
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->docenteID]);
+            $model = new Docentes();
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->docenteID]);
+            }
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -84,15 +93,19 @@ class DocentesController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->docenteID]);
+        if(Yii::$app->user->can('modificarDocentes'))
+        {
+            
+            $model = $this->findModel($id);
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->docenteID]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -104,9 +117,13 @@ class DocentesController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('modificarDocentes'))
+        {
+            
+            $this->findModel($id)->delete();
+    
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -118,10 +135,16 @@ class DocentesController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Docentes::findOne($id)) !== null) {
-            return $model;
+        if(Yii::$app->user->can('modificarDocentes'))
+        {
+            
+            if (($model = Docentes::findOne($id)) !== null) {
+                return $model;
+            }
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Favor de Iniciar sesión');
     }
+
+
 }

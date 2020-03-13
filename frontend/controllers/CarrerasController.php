@@ -35,13 +35,17 @@ class CarrerasController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new CarrerasSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+            $searchModel = new CarrerasSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        }
     }
 
     /**
@@ -52,9 +56,13 @@ class CarrerasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+
+        }
     }
 
     /**
@@ -64,15 +72,20 @@ class CarrerasController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Carreras();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->carreraID]);
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+            $model = new Carreras();
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->carreraID]);
+            }
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -84,15 +97,20 @@ class CarrerasController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->carreraID]);
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+
+            $model = $this->findModel($id);
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->carreraID]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -104,9 +122,14 @@ class CarrerasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+
+            $this->findModel($id)->delete();
+    
+            return $this->redirect(['index']);
+        }
     }
 
     /**
@@ -118,10 +141,15 @@ class CarrerasController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Carreras::findOne($id)) !== null) {
-            return $model;
+
+        if(Yii::$app->user->can('modificarCarreras'))
+        {
+
+            if (($model = Carreras::findOne($id)) !== null) {
+                return $model;
+            }
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 }

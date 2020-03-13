@@ -20,9 +20,7 @@ use frontend\models\Empleados;
 
     <?= $form->field($model, 'alumnoNoControl')->textInput(['maxlength' => true,
         'onchange'=>'
-
-                
-                    $.get("index.php?r=alumnos/get-nombre-alumno&noControl="+$(this).val(),function (data){
+                $.get("index.php?r=alumnos/get-nombre-alumno&noControl="+$(this).val(),function (data){
                         
                         var data = $.parseJSON(data);
                         if (data !== null) {
@@ -33,9 +31,7 @@ use frontend\models\Empleados;
                         }else {
                             alert("Alumno no registrado");
                         }
-                    });
-
-        '
+                    });'
         ]) ?>
 
     <?= $form->field($model, 'alumnoNombre')->textInput(['maxlength' => true]) ?>
@@ -61,7 +57,6 @@ use frontend\models\Empleados;
 
                     ],
                 ]); ?>
-
                 <div class="container-items"><!-- widgetContainer -->
                     <?php foreach ($modelsMaterialDevuelto as $i => $modelMaterialDevuelto): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
@@ -80,24 +75,20 @@ use frontend\models\Empleados;
                                 echo Html::activeHiddenInput($modelMaterialDevuelto, "[{$i}]id");
                             }
                             ?>
-
                             <div class="row">
                                 <div class="col-sm-6">
-
                                     <?= $form->field($modelMaterialDevuelto, "[{$i}]matID")->textInput(['maxlength' => true]);?>
-
-
                                 </div>
                                 <div class="col-sm-6">
                                     <?= $form->field($modelMaterialDevuelto, "[{$i}]materialNombre")->textInput(['maxlength' => true]);?>
                                 </div>
                             </div><!-- .row -->
-
                             <?php endforeach; ?>
                         </div>
                         <?php DynamicFormWidget::end(); ?>
                     </div>
                 </div>
+            </div>
 
             </div>
 
@@ -137,6 +128,8 @@ $("#materialdevuelto-0-matid").on('change',function(){
             }else{
                 if (data.estatus == 'B'){
                     alert("Material ya está dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-0-materialnombre").val(data.descrMat);
                 }
@@ -182,7 +175,10 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
-                }else{
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
+                }
+                    else{
                     $("#materialdevuelto-0-materialnombre").val(data.descrMat);
                 }
             }
@@ -208,6 +204,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-1-materialnombre").val(data.descrMat);
 
@@ -233,6 +231,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-2-materialnombre").val(data.descrMat);
 
@@ -260,6 +260,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-3-materialnombre").val(data.descrMat);
 
@@ -286,6 +288,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if  (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-4-materialnombre").val(data.descrMat);
 
@@ -314,6 +318,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-5-materialnombre").val(data.descrMat);
 
@@ -341,6 +347,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if  (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-6-materialnombre").val(data.descrMat);
 
@@ -368,6 +376,8 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
             }else{
                 if (data.estatus == 'B'){
                     alert("Material dado de baja");
+                }else if (data.estatus == 'D'){
+                    alert("Material no prestado");
                 }else{
                     $("#materialdevuelto-7-materialnombre").val(data.descrMat);
 

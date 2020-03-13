@@ -44,4 +44,6 @@ class Docentes extends \yii\db\ActiveRecord
             'docenteCarreraNombre' => 'Carrera del Docente',
         ];
     }
+
+
 }

@@ -148,6 +148,7 @@ use frontend\models\Periodos;
         <?php DynamicFormWidget::end(); ?>
     </div>
 </div>
+</div>
 
    </div>
 
@@ -217,15 +218,22 @@ $(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
 $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     console.log("afterInsert")
     
+    // primer campo dinamico
     $("#materiales-0-matid").on('change',function(){
+        // manda la variable ID del material a InventarioController
         $.get("index.php?r=inventario/get-nombre-material&matID="+$(this).val(),function (data){
+           // Obtiene los registros y los divide de acuerdo a la columna
+           // a la cual pertenecen en la tabla de Inventario
             var data = $.parseJSON(data);
             
 
-            console.log(data);
+            // Si no hay registros, avisar que el material no existe
+            // de lo contrario prosigue a alertar o llenar el campo del nombre del material
+            // si aplica
             if (data == null){
                 alert("Material Inexistente");
             }else{
+                
                 if (data.estatus == 'P'){
                     alert("Material en prestamo");
                 }else if (data.estatus == 'B'){

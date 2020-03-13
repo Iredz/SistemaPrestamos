@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use frontend\models\Docentes;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Prestamos */
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Borrar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Está seguro de borrarlo?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,15 +30,43 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+
+            [
+                    'attribute' => 'id',
+                    'label' => 'ID del Estudiante'
+            ],
+
             'noControlAlumno',
             'nombreAlumno',
-            'materiaID',
-            'docenteID',
+
+            [
+                'attribute' => 'materiaID',
+                'label'=> 'Materia',
+                'value'=>$model->materianom->materiaNombre,
+
+            ],
+           [
+                   'attribute' => 'docenteID',
+                    'label'=> 'Docente',
+                    'value'=>$model->docentenom->docenteNombre,
+
+           ],
             'periodo',
-            'fecha',
+
+            [
+                    'attribute' => 'fecha',
+                    'label' => 'Fecha',
+                    'value' => time(),
+                    'language'=> 'es',
+                    'format' => 'date'
+            ],
             'observaciones:ntext',
-            'entregaNombre',
+
+            [
+                'attribute' => 'entregaNombre',
+                'label'=> 'Entregó'
+            ],
+
         ],
     ]) ?>
 

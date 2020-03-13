@@ -53,7 +53,7 @@ AppAsset::register($this);
     }
     if(Yii::$app->user->can('privilegios-empleado')){
         $menuItems[] = ['label' => 'Alumnos', 'url' => ['/alumnos/index']];
-        $menuItems[] = ['label' => 'Carreras', 'url' => ['/carreras/index']];
+        $menuItems[] = ['label' => 'Docentes', 'url' => ['/docentes/index']];
         $menuItems[] = ['label' => 'Materias', 'url' => ['/materias/index']];
         $menuItems[] = ['label' => 'Prestamos', 'url' => ['/prestamos/index']];
         $menuItems[] = ['label' => 'Devoluciones', 'url' => ['/devoluciones/index']];

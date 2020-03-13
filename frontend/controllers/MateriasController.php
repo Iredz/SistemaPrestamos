@@ -17,6 +17,7 @@ class MateriasController extends Controller
     /**
      * {@inheritdoc}
      */
+
     public function behaviors()
     {
         return [
@@ -35,13 +36,18 @@ class MateriasController extends Controller
      */
     public function actionIndex()
     {
+
+        if(Yii::$app->user->can('modificarMaterias'))
+        {
         $searchModel = new MateriasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+          return $this->render('index', [
+              'searchModel' => $searchModel,
+              'dataProvider' => $dataProvider,
+          ]);
+        }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -52,9 +58,15 @@ class MateriasController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+
+        if(Yii::$app->user->can('modificarMaterias'))
+        {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }   
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -64,15 +76,21 @@ class MateriasController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Materias();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->materiaID]);
+        if(Yii::$app->user->can('modificarMaterias'))
+        {
+
+            $model = new Materias();
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->materiaID]);
+            }
+    
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -84,15 +102,21 @@ class MateriasController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->materiaID]);
+        if(Yii::$app->user->can('modificarMaterias'))
+        {
+
+            $model = $this->findModel($id);
+    
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->materiaID]);
+            }
+    
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -104,9 +128,15 @@ class MateriasController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        if(Yii::$app->user->can('modificarMaterias'))
+        {
+
+            $this->findModel($id)->delete();
+    
+            return $this->redirect(['index']);
+        }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
     /**
@@ -118,10 +148,15 @@ class MateriasController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Materias::findOne($id)) !== null) {
-            return $model;
+
+        if(Yii::$app->user->can('modificarMateriass'))
+        {
+
+            if (($model = Materias::findOne($id)) !== null) {
+                return $model;
+            }
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 }

@@ -37,7 +37,7 @@ class BajasController extends Controller
 
 
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarBajas'))
         {
         $searchModel = new BajasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -58,7 +58,7 @@ class BajasController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarBajas'))
         {
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -74,7 +74,7 @@ class BajasController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarBajas'))
         {
         $model = new Bajas();
 
@@ -98,7 +98,7 @@ class BajasController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarBajas'))
         {
 
         $model = $this->findModel($id);
@@ -123,7 +123,7 @@ class BajasController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::$app->user->can('privilegios-admin'))
+        if(Yii::$app->user->can('modificarBajas'))
         {
         $this->findModel($id)->delete();
 
@@ -140,11 +140,15 @@ class BajasController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
-    {
-        if (($model = Bajas::findOne($id)) !== null) {
-            return $model;
+    { 
+        if(Yii::$app->user->can('modificarBajas'))
+        {
+            if (($model = Bajas::findOne($id)) !== null) {
+                return $model;
+            }
+
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 }

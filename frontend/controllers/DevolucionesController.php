@@ -68,15 +68,12 @@ class DevolucionesController extends Controller
     {
         $model = new Devoluciones();
         $modelsMaterialDevuelto = [new MaterialDevuelto];
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            /*
-             * Se hace uso del  modelo "Model.php" , para el manejo
-             * múltiple de elementos
-            */
+            /* Se hace uso del  modelo "Model.php" , para el manejo
+                múltiple de elementos */
+
             $modelsMaterialDevuelto = Model::createMultiple(MaterialDevuelto::classname());
             Model::loadMultiple($modelsMaterialDevuelto, Yii::$app->request->post());
-
 
             // validar los modelos
             $valid = $model->validate();
