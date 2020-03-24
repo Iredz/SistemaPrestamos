@@ -46,6 +46,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -54,6 +55,7 @@ return [
             ],
         ],
         */
+        
     ],
     'params' => $params,
 ];

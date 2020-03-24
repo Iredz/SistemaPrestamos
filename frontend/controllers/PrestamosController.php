@@ -2,12 +2,17 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Materias;
 use Yii;
 use frontend\models\Prestamos;
 use frontend\models\PrestamosSearch;
 use frontend\models\Materiales;
 use frontend\models\MaterialesSearch;
 use frontend\models\Model;
+use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
+use yii\db\Query;
+use yii\db\ActiveQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -36,6 +41,8 @@ class PrestamosController extends Controller
      * Lists all Prestamos models.
      * @return mixed
      */
+
+    
     public function actionIndex()
     {
 
@@ -212,4 +219,75 @@ class PrestamosController extends Controller
 
         throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
+
+    public function actionReporte(){
+        
+        
+            
+
+        /*    -------------------     PRIMER TABLA   -------------------    */
+        $sql = 'SELECT
+                alumnos.alumnoCarreraNombre as "Carrera",
+                COUNT(*) as Visitas
+            FROM prestamos
+            LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
+            GROUP BY Carrera
+        ';
+
+        $sqlProvider = new SqlDataProvider([
+            'sql'=>$sql,
+            'sort'=>[
+                'defaultOrder'=> ['Visitas'=>SORT_DESC],
+               'attributes'=>['Carrera','Visitas']
+            
+            ],   
+        ]);
+
+            /*-------------------   SEGUNDA TABLA   ------------------- */
+        $sql2 = 'SELECT materialNombre as "Nombre de Material",
+                 COUNT(*) as "Veces Prestado"
+            FROM materiales
+            GROUP BY materialNombre
+          
+        ';
+
+        $sqlProvider2 = new SqlDataProvider([
+            'sql'=>$sql2,
+            'sort'=>[
+                'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
+               'attributes'=>['Nombre de Material','Veces Prestado']
+            ],
+        ]);
+
+
+            /*-------------------   TERCERA TABLA   ------------------- */
+            $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
+                    COUNT(*) as "Visitas"
+                FROM prestamos
+                LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
+                GROUP BY materias.materiaNombre
+
+            ';
+
+            $sqlProvider3 = new SqlDataProvider([
+                'sql'=>$sql3,
+                'sort'=>[
+                    'defaultOrder'=>['Número de Visitas'=>SORT_DESC],
+                    'attributes'=>['Nombre de Materia','Visitas']
+                ],
+               
+            ]);
+
+
+            /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
+        return $this->render('reporte',[
+            'sqlProvider'=> $sqlProvider,
+            'sqlProvider2'=>$sqlProvider2,
+            'sqlProvider3'=>$sqlProvider3,
+              
+        
+        
+        ]);
+
+            }
 }

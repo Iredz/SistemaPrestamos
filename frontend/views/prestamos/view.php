@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                     'attribute' => 'fecha',
                     'label' => 'Fecha',
-                    'value' => time(),
+                    'value' => $model->fecha,
                     'language'=> 'es',
                     'format' => 'date'
             ],

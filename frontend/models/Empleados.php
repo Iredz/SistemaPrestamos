@@ -36,8 +36,8 @@ class Empleados extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'empleadoID' => 'Empleado ID',
-            'empleadoNombre' => 'Empleado Nombre',
+            'empleadoID' => 'ID de Empleado',
+            'empleadoNombre' => 'Nombre de Empleado',
         ];
     }
 }

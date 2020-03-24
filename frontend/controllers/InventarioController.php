@@ -5,6 +5,8 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Inventario;
 use frontend\models\InventarioSearch;
+use yii\db\Query;
+use yii\db\ActiveRecord;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +22,9 @@ class InventarioController extends Controller
     /**
      * {@inheritdoc}
      */
+
+
+
     public function behaviors()
     {
         return [
@@ -36,6 +41,9 @@ class InventarioController extends Controller
      * Lists all Inventario models.
      * @return mixed
      */
+
+
+
     public function actionIndex()
     {
         if(Yii::$app->user->can('modificarInventario'))

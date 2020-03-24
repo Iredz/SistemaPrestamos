@@ -63,7 +63,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ],
             //'periodo',
-            'fecha',
+
+            [
+                'attribute'=>'fecha',
+                'format'=>'date',
+
+            ],
 
             //'observaciones:ntext',
 
