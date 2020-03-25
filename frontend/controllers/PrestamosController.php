@@ -289,7 +289,7 @@ class PrestamosController extends Controller
             'sqlProvider2'=>$sqlProvider2,
             'sqlProvider3'=>$sqlProvider3,
             
-            'dataProvider'=>$dataProvider,
+            
               
         
         
