@@ -1,6 +1,16 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\grid\GridView;
+use miloschuman\highcharts\Highcharts;
+use miloschuman\highcharts\SeriesDataHelper;
+use miloschuman\highcharts\Highstock;
+use yii\data\ArrayDataProvider;
+use yii\db\Query;
+use frontend\models\Prestamos;
+use frontend\models\Materiales;
+
 
 
 /*
@@ -49,3 +59,8 @@ $this->params['breadcrumbs'][]=$this->title;
     'dataProvider'=>$sqlProvider3,
     'layout'=>'{items}{pager}'
 ]);?>
+
+
+
+
+

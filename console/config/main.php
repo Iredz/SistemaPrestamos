@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-console',
-    'basePath' => dirname(__DIR__),
+    'basePath' => dirname(__DIR__.'/../../frontend/config'),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
