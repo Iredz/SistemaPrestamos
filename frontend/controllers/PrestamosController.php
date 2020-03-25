@@ -281,20 +281,7 @@ class PrestamosController extends Controller
 
             /*-------------     PROBANDO GRAPHS    ------------------------*/
             
-        $data = [
-            ['date' => '2006-05-14T20:00:00-0400', 'open' => 67.37, 'high' => 68.38, 'low' => 67.12, 'close' => 67.79, 'volume' => 18921051],
-            ['date' => '2006-05-15T20:00:00-0400', 'open' => 68.1, 'high' => 68.25, 'low' => 64.75, 'close' => 64.98, 'volume' => 33470860],
-            ['date' => '2006-05-16T20:00:00-0400', 'open' => 64.7, 'high' => 65.7, 'low' => 64.07, 'close' => 65.26, 'volume' => 26941146],
-            ['date' => '2006-05-17T20:00:00-0400', 'open' => 65.68, 'high' => 66.26, 'low' => 63.12, 'close' => 63.18, 'volume' => 23524811],
-            ['date' => '2006-05-18T20:00:00-0400', 'open' => 63.26, 'high' => 64.88, 'low' => 62.82, 'close' => 64.51, 'volume' => 35221586],
-            ['date' => '2006-05-21T20:00:00-0400', 'open' => 63.87, 'high' => 63.99, 'low' => 62.77, 'close' => 63.38, 'volume' => 25680800],
-            ['date' => '2006-05-22T20:00:00-0400', 'open' => 64.86, 'high' => 65.19, 'low' => 63, 'close' => 63.15, 'volume' => 24814061],
-            ['date' => '2006-05-23T20:00:00-0400', 'open' => 62.99, 'high' => 63.65, 'low' => 61.56, 'close' => 63.34, 'volume' => 32722949],
-            ['date' => '2006-05-24T20:00:00-0400', 'open' => 64.26, 'high' => 64.45, 'low' => 63.29, 'close' => 64.33, 'volume' => 16563319],
-            ['date' => '2006-05-25T20:00:00-0400', 'open' => 64.31, 'high' => 64.56, 'low' => 63.14, 'close' => 63.55, 'volume' => 15464811],
-        ];
 
-        $dataProvider = new ArrayDataProvider(['allModels'=>$data]);
             
         /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
         return $this->render('reporte',[
