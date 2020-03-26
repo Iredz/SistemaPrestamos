@@ -232,8 +232,7 @@ class PrestamosController extends Controller
                 COUNT(*) as Visitas
             FROM prestamos
             LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
-            GROUP BY Carrera
-        ';
+            GROUP BY Carrera';
 
         $sqlProvider = new SqlDataProvider([
             'sql'=>$sql,
@@ -248,9 +247,7 @@ class PrestamosController extends Controller
         $sql2 = 'SELECT materialNombre as "Nombre de Material",
                  COUNT(*) as "Veces Prestado"
             FROM materiales
-            GROUP BY materialNombre
-          
-        ';
+            GROUP BY materialNombre';
 
         $sqlProvider2 = new SqlDataProvider([
             'sql'=>$sql2,
@@ -266,9 +263,7 @@ class PrestamosController extends Controller
                     COUNT(*) as "Visitas"
                 FROM prestamos
                 LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
-                GROUP BY materias.materiaNombre
-
-            ';
+                GROUP BY materias.materiaNombre';
 
             $sqlProvider3 = new SqlDataProvider([
                 'sql'=>$sql3,
