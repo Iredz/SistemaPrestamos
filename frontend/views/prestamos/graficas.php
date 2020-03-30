@@ -4,11 +4,6 @@ use frontend\models\Materiales;
 use frontend\models\Materias;
 use frontend\models\Prestamos;
 use practically\chartjs\Chart;
-use miloschuman\highcharts\SeriesDataHelper;
-use miloschuman\highcharts\Highcharts;
-use yii\data\ActiveDataProvider;
-use yii\grid\GridView;
-use yii\widgets\ListView;
 use frontend\assets\ChartAsset;
 
 ChartAsset::register($this);
@@ -16,8 +11,6 @@ ChartAsset::register($this);
 
 $this->title= 'Gráficas reporte final de ciclo escolar';
 $this->params['breadcrumbs'][]=$this->title;
-
-
 
 ?>
 
