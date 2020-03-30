@@ -23,6 +23,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'=>function($model){
+            if($model->estatus == 'P')
+            {
+                return['class'=>'danger'];
+            }else if($model->estatus == 'D')
+            {
+                return['class'=>'success'];
+            }else if($model->estatus == 'B'){
+                return['class'=>'warning'];
+            }
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
