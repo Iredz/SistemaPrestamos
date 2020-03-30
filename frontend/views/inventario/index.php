@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'modelo',
             'serie',
             'noInventario',
-            //'estatus',
+            'estatus',
 
             ['class' => 'yii\grid\ActionColumn','template'=>'{view}'],
         ],

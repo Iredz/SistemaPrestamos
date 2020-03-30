@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Materias;
 use Yii;
+use frontend\models\Materias;
 use frontend\models\Prestamos;
 use frontend\models\PrestamosSearch;
 use frontend\models\Materiales;
@@ -12,6 +12,7 @@ use frontend\models\Model;
 use yii\data\ArrayDataProvider;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
+use miloschuman\highcharts\SeriesDataHelper;
 use yii\db\Query;
 use yii\db\ActiveQuery;
 use yii\web\Controller;
@@ -221,7 +222,7 @@ class PrestamosController extends Controller
         throw new NotFoundHttpException('Favor de Iniciar Sesión');
     }
 
-    public function actionReporte(){
+    public function actionDatos(){
         
         
             
@@ -232,8 +233,7 @@ class PrestamosController extends Controller
                 COUNT(*) as Visitas
             FROM prestamos
             LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
-            GROUP BY Carrera
-        ';
+            GROUP BY Carrera';
 
         $sqlProvider = new SqlDataProvider([
             'sql'=>$sql,
@@ -248,9 +248,7 @@ class PrestamosController extends Controller
         $sql2 = 'SELECT materialNombre as "Nombre de Material",
                  COUNT(*) as "Veces Prestado"
             FROM materiales
-            GROUP BY materialNombre
-          
-        ';
+            GROUP BY materialNombre';
 
         $sqlProvider2 = new SqlDataProvider([
             'sql'=>$sql2,
@@ -266,9 +264,7 @@ class PrestamosController extends Controller
                     COUNT(*) as "Visitas"
                 FROM prestamos
                 LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
-                GROUP BY materias.materiaNombre
-
-            ';
+                GROUP BY materias.materiaNombre';
 
             $sqlProvider3 = new SqlDataProvider([
                 'sql'=>$sql3,
@@ -279,34 +275,81 @@ class PrestamosController extends Controller
                
             ]);
 
-            /*-------------     PROBANDO GRAPHS    ------------------------*/
-            
-        $data = [
-            ['date' => '2006-05-14T20:00:00-0400', 'open' => 67.37, 'high' => 68.38, 'low' => 67.12, 'close' => 67.79, 'volume' => 18921051],
-            ['date' => '2006-05-15T20:00:00-0400', 'open' => 68.1, 'high' => 68.25, 'low' => 64.75, 'close' => 64.98, 'volume' => 33470860],
-            ['date' => '2006-05-16T20:00:00-0400', 'open' => 64.7, 'high' => 65.7, 'low' => 64.07, 'close' => 65.26, 'volume' => 26941146],
-            ['date' => '2006-05-17T20:00:00-0400', 'open' => 65.68, 'high' => 66.26, 'low' => 63.12, 'close' => 63.18, 'volume' => 23524811],
-            ['date' => '2006-05-18T20:00:00-0400', 'open' => 63.26, 'high' => 64.88, 'low' => 62.82, 'close' => 64.51, 'volume' => 35221586],
-            ['date' => '2006-05-21T20:00:00-0400', 'open' => 63.87, 'high' => 63.99, 'low' => 62.77, 'close' => 63.38, 'volume' => 25680800],
-            ['date' => '2006-05-22T20:00:00-0400', 'open' => 64.86, 'high' => 65.19, 'low' => 63, 'close' => 63.15, 'volume' => 24814061],
-            ['date' => '2006-05-23T20:00:00-0400', 'open' => 62.99, 'high' => 63.65, 'low' => 61.56, 'close' => 63.34, 'volume' => 32722949],
-            ['date' => '2006-05-24T20:00:00-0400', 'open' => 64.26, 'high' => 64.45, 'low' => 63.29, 'close' => 64.33, 'volume' => 16563319],
-            ['date' => '2006-05-25T20:00:00-0400', 'open' => 64.31, 'high' => 64.56, 'low' => 63.14, 'close' => 63.55, 'volume' => 15464811],
-        ];
+             /*-------------------   CUARTA TABLA   ------------------- */
+                $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
+                COUNT(*) as "Visitas"
+            FROM prestamos
+            LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
+            GROUP BY docentes.docenteNombre';
 
-        $dataProvider = new ArrayDataProvider(['allModels'=>$data]);
+            $sqlProvider4 = new SqlDataProvider([
+                'sql'=>$sql4,
+                'sort'=>[
+                    'defaultOrder'=>['Visitas'=>SORT_DESC],
+                    'attributes'=>['Nombre del docente','Visitas']
+                ],
+                
+            ]);
+
             
         /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
-        return $this->render('reporte',[
+        return $this->render('datos',[
             'sqlProvider'=> $sqlProvider,
             'sqlProvider2'=>$sqlProvider2,
             'sqlProvider3'=>$sqlProvider3,
+            'sqlProvider4'=>$sqlProvider4,
             
-            'dataProvider'=>$dataProvider,
+            
               
         
         
         ]);
 
             }
+
+        public function actionGraficas(){
+
+    /*-------------     PROBANDO PRACTICALLY GRAPHS    ------------------------*/
+          
+            $query1 = Prestamos::find()
+            ->select('alumnos.alumnoCarreraNombre as Carrera')
+            ->addSelect('count(*) as data')
+            ->innerJoin('alumnos','alumnos.noControl = prestamos.noControlAlumno')
+            ->groupBy('Carrera')
+            ->createCommand();
+
+
+            
+
+            $query2 = Materiales::find()
+            ->select('materialNombre')
+            ->addSelect('count(*) as data')
+            ->groupBy('materialNombre')
+            ->createCommand();
+
+            $query3 = Prestamos::find()
+            ->select('materias.materiaNombre as Materias')
+            ->addSelect('count(*) as data')
+            ->innerJoin('materias','materias.materiaID = prestamos.materiaID')
+            ->groupBy('Materias')
+            ->createCommand();
+
+            $query4 = Prestamos::find()
+            ->select('docentes.docenteNombre as Docentes')
+            ->addSelect('count(*) as data')
+            ->innerJoin('docentes','docentes.docenteID = prestamos.docenteID')
+            ->groupBy('Docentes')
+            ->createCommand();
+           
+
+          
+          
+            return $this->render('graficas',[
+                'query1'=>$query1,
+                'query2'=>$query2,
+                'query3'=>$query3,
+                'query4'=>$query4,
+            ]);
+
+        }
 }

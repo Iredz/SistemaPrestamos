@@ -3,30 +3,23 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use yii\db\Query;
+use miloschuman\highcharts\Highstock;
 use miloschuman\highcharts\Highcharts;
 use miloschuman\highcharts\SeriesDataHelper;
-use miloschuman\highcharts\Highstock;
-use yii\data\ArrayDataProvider;
-use yii\db\Query;
+use practically\chartjs\Chart;
 use frontend\models\Prestamos;
 use frontend\models\Materiales;
 
 
 
-/*
-print"<pre>";
 
-
-echo $JSON;
-
-print"</pre>";
-*/
-
-
-$this->title= 'Reporte de Préstamos';
+$this->title= 'Sección Reporte de Préstamos';
 $this->params['breadcrumbs'][]=$this->title;
 
 ?>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 
 <!--    PRIMERA TABLA   -->
 <div>&emsp;</div><div>&emsp;</div>
@@ -47,7 +40,9 @@ $this->params['breadcrumbs'][]=$this->title;
 <?= GridView::widget([
     'dataProvider'=>$sqlProvider2,
     'layout'=>'{items}{pager}'
-]);?>
+]);
+
+?>
 
 <!--    TERCERA TABLA   -->
 
@@ -60,7 +55,15 @@ $this->params['breadcrumbs'][]=$this->title;
     'layout'=>'{items}{pager}'
 ]);?>
 
+<!--    CUARTA TABLA   -->
 
+<div>&emsp;</div><div>&emsp;</div>
+<h2 style="text-align: center;">Número de visitas al laboratorio por docente</h2>
+<div>&emsp;</div>
 
+<?= GridView::widget([
+    'dataProvider'=>$sqlProvider4,
+    'layout'=>'{items}{pager}'
+]);?>
 
 
