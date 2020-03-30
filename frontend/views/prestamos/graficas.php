@@ -1,8 +1,6 @@
 <?php
 
-use frontend\models\Materiales;
-use frontend\models\Materias;
-use frontend\models\Prestamos;
+
 use practically\chartjs\Chart;
 use frontend\assets\ChartAsset;
 
