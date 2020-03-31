@@ -2,11 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use yii\grid\GridView;
-use yii\db\Query;
-use miloschuman\highcharts\Highstock;
-use miloschuman\highcharts\Highcharts;
-use miloschuman\highcharts\SeriesDataHelper;
+use kartik\grid\GridView;
 use practically\chartjs\Chart;
 use frontend\models\Prestamos;
 use frontend\models\Materiales;
@@ -28,10 +24,20 @@ $this->params['breadcrumbs'][]=$this->title;
 <h2 style="text-align: center;">Número de alumnos por carrera que visitaron el laboratorio</h2>
 <div>&emsp;</div>
 
-<?= GridView::widget([
+<?php 
+echo GridView::widget([
     'dataProvider'=>$sqlProvider,
-    'layout'=>'{items}{pager}'
-]);?>
+    'layout'=>'{items}{pager}',
+    'bordered'=>true,
+    'striped'=>true,
+    'responsive'=> false,
+    'resizableColumns'=>true,
+    'pjax'=>true,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true, 
+    ],
+]);
+?>
 
 <!--    SEGUNDA TABLA   -->
 
@@ -39,9 +45,18 @@ $this->params['breadcrumbs'][]=$this->title;
 <h2 style="text-align: center;">Número de veces que fue prestado el material didáctico</h2>
 <div>&emsp;</div>
 
-<?= GridView::widget([
+<?php
+echo GridView::widget([
     'dataProvider'=>$sqlProvider2,
-    'layout'=>'{items}{pager}'
+    'layout'=>'{items}{pager}',
+    'bordered'=>true,
+    'striped'=>true,
+    'responsive'=> false,
+    'resizableColumns'=>true,
+    'pjax'=>true,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true,
+    ],
 ]);
 
 ?>
@@ -54,7 +69,15 @@ $this->params['breadcrumbs'][]=$this->title;
 
 <?= GridView::widget([
     'dataProvider'=>$sqlProvider3,
-    'layout'=>'{items}{pager}'
+    'layout'=>'{items}{pager}',
+    'bordered'=>true,
+    'striped'=>true,
+    'responsive'=> false,
+    'resizableColumns'=>true,
+    'pjax'=>true,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true,
+    ],
 ]);?>
 
 <!--    CUARTA TABLA   -->
@@ -65,7 +88,15 @@ $this->params['breadcrumbs'][]=$this->title;
 
 <?= GridView::widget([
     'dataProvider'=>$sqlProvider4,
-    'layout'=>'{items}{pager}'
+    'layout'=>'{items}{pager}',
+    'bordered'=>true,
+    'striped'=>true,
+    'responsive'=> true,
+    'resizableColumns'=>true,
+    'pjax'=>true,
+    'pjaxSettings'=>[
+        'neverTimeout'=>true,
+    ],
 ]);?>
 
 
