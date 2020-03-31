@@ -12,7 +12,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'modules' => [],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module',
+        ],
+        'gridviewKrajee' =>  [
+            'class' => '\kartik\grid\Module',
+        ]
+    ],
     'components' => [
         
         'request' => [
