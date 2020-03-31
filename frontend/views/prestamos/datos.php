@@ -15,7 +15,9 @@ use frontend\models\Materiales;
 
 
 $this->title= 'Sección Reporte de Préstamos';
+$this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
 $this->params['breadcrumbs'][]=$this->title;
+\yii\web\YiiAsset::register($this);
 
 ?>
 

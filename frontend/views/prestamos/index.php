@@ -21,13 +21,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Procesar Prestamo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Gráficas', ['graficas'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Datos Tabulados', ['datos'], ['class' => 'btn btn-primary']) ?>
     </p>
 
+
+    
     <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'layout'=>'{items}{pager}',
         'columns' => [
             [
             'class' => 'yii\grid\SerialColumn'],
@@ -35,12 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         
 
-
+            /*
             [
                     'attribute' => 'id',
                     'label' => ''
             ],
-
+            */
             [
                     'attribute' => 'noControlAlumno',
                     'label' => 'No. control'
@@ -72,12 +77,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'observaciones:ntext',
 
+            /*
             [
                     'attribute' => 'entregaNombre',
                     'label'=> 'Entregó'
             ],
-
+            */
             ['class' => 'yii\grid\ActionColumn','template' =>'{view}'],
+            
         ],
     ]); ?>
 
