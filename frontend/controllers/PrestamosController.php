@@ -275,6 +275,7 @@ class PrestamosController extends Controller
                
             ]);
 
+<<<<<<< HEAD
              /*-------------------   CUARTA TABLA   ------------------- */
                 $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
                 COUNT(*) as "Visitas"
@@ -290,6 +291,10 @@ class PrestamosController extends Controller
                 ],
                 
             ]);
+=======
+            /*-------------     PROBANDO GRAPHS    ------------------------*/
+            
+>>>>>>> a893b9924bc260170b2df4038a1782c41a04c93e
 
             
         /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
@@ -300,6 +305,10 @@ class PrestamosController extends Controller
             'sqlProvider4'=>$sqlProvider4,
             
             
+<<<<<<< HEAD
+=======
+            
+>>>>>>> a893b9924bc260170b2df4038a1782c41a04c93e
               
         
         
