@@ -1,17 +1,13 @@
 <?php
 
-
 use practically\chartjs\Chart;
 use frontend\assets\ChartAsset;
 
 ChartAsset::register($this);
 
-
 $this->title= 'Gráficas reporte final de ciclo escolar';
 $this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
 $this->params['breadcrumbs'][]=$this->title;
-\yii\web\YiiAsset::register($this);
-
 ?>
 
 
