@@ -245,7 +245,7 @@ class PrestamosController extends Controller
         ]);
 
             /*-------------------   SEGUNDA TABLA   ------------------- */
-        $sql2 = 'SELECT materialNombre as "Nombre de Material",
+        $sql2 = 'SELECT materialNombre as "Nombre del material",
                  COUNT(*) as "Veces Prestado"
             FROM materiales
             GROUP BY materialNombre';
@@ -254,7 +254,7 @@ class PrestamosController extends Controller
             'sql'=>$sql2,
             'sort'=>[
                 'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
-               'attributes'=>[' Nombre de Material','Veces Prestado']
+               'attributes'=>[' Nombre del Material','Veces Prestado']
             ],
         ]);
 
@@ -275,7 +275,7 @@ class PrestamosController extends Controller
                
             ]);
 
-<<<<<<< HEAD
+
              /*-------------------   CUARTA TABLA   ------------------- */
                 $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
                 COUNT(*) as "Visitas"
@@ -291,10 +291,7 @@ class PrestamosController extends Controller
                 ],
                 
             ]);
-=======
-            /*-------------     PROBANDO GRAPHS    ------------------------*/
-            
->>>>>>> a893b9924bc260170b2df4038a1782c41a04c93e
+
 
             
         /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
@@ -305,10 +302,6 @@ class PrestamosController extends Controller
             'sqlProvider4'=>$sqlProvider4,
             
             
-<<<<<<< HEAD
-=======
-            
->>>>>>> a893b9924bc260170b2df4038a1782c41a04c93e
               
         
         
