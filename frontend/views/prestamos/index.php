@@ -21,8 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Procesar Prestamo', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Gráficas', ['graficas'], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Datos Tabulados', ['datos'], ['class' => 'btn btn-primary']) ?>
+        
+    </p>
+
+    <p>
+        <?=Html::a('Gráficas', ['graficas'], ['class' => 'btn btn-primary'])?>
+        <?= Html::a('Datos Tabulados', ['datos'], ['class' => 'btn btn-primary'])?>
+    
     </p>
 
 
