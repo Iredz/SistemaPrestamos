@@ -19,7 +19,7 @@ return [
         'gridviewKrajee' =>  [
             'class' => '\kartik\grid\Module',
         ]
-    ],
+    ],  
     'components' => [
         
         'request' => [
@@ -62,7 +62,7 @@ return [
             ],
         ],
         */
-        
+     
     ],
     'params' => $params,
 ];
