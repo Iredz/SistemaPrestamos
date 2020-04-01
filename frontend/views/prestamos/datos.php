@@ -4,7 +4,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use kartik\grid\GridView;
 use yii\data\SqlDataProvider;
-use practically\chartjs\Chart;
 use frontend\models\Prestamos;
 use frontend\models\Materiales;
 use yii\web\YiiAsset;

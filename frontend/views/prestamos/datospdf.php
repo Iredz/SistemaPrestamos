@@ -24,6 +24,7 @@ echo GridView::widget([
     'striped'=>true,
     'responsive'=> false,
     'resizableColumns'=>true,
+   
     'pjax'=>true,
     'pjaxSettings'=>[
         'neverTimeout'=>true, 
