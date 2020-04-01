@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Prestamos */
 
-$this->title = 'Create Prestamos';
+$this->title = 'Procesar Prestamo';
 $this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
