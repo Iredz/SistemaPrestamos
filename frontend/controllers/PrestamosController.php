@@ -232,6 +232,7 @@ class PrestamosController extends Controller
 
         $sqlProvider = new SqlDataProvider([
             'sql'=>$sql,
+            
             'sort'=>[
                 'defaultOrder'=> ['Visitas'=>SORT_DESC],
                'attributes'=>['Carrera','Visitas']
@@ -299,7 +300,7 @@ class PrestamosController extends Controller
 
         public function actionGraficas(){
 
-    /*-------------     PROBANDO PRACTICALLY GRAPHS    ------------------------*/
+    
           
             $query1 = Prestamos::find()
             ->select('alumnos.alumnoCarreraNombre as Carrera')
@@ -437,6 +438,4 @@ $sqlProvider2 = new SqlDataProvider([
 
         }
 
-       
-       
 }
