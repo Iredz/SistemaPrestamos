@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\models\InventarioSearch */
@@ -23,6 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'bordered'=>true,
+        'striped'=>false,
+        'hover'=>true,
+        'pjax'=>true,
+        'pjaxSettings'=>[
+            'neverTimeout'=>true, 
+        ],
         'rowOptions'=>function($model){
             if($model->estatus == 'P')
             {
