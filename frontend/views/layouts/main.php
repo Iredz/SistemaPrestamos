@@ -36,27 +36,124 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Inicio', 'url' => ['/site/index']],
+        //['label' => 'Inicio', 'url' => ['/site/index']],
     ];
 
     if(Yii::$app->user->can('privilegios-admin')){
-        $menuItems[] = ['label' => 'Alumnos', 'url' => ['/alumnos/index']];
-        $menuItems[] = ['label' => 'Docentes', 'url' => ['/docentes/index']];
-        $menuItems[] = ['label' => 'Carreras', 'url' => ['/carreras/index']];
-        $menuItems[] = ['label' => 'Materias', 'url' => ['/materias/index']];
-        $menuItems[] = ['label' => 'Empleados', 'url' => ['/empleados/index']];
-        $menuItems[] = ['label' => 'Inventario', 'url' => ['/inventario/index']];
-        $menuItems[] = ['label' => 'Prestamos', 'url' => ['/prestamos/index']];
-        $menuItems[] = ['label' => 'Devoluciones', 'url' => ['/devoluciones/index']];
-        $menuItems[] = ['label' => 'Bajas', 'url' => ['/bajas/index']];
+        
+        
+        $menuItems[] = [
+            'label'=>Yii::t('app', 'Dar de alta'),
+            'items'=>[
+                [
+                    'label' => 'Alumnos',
+                     'url' => ['/alumnos/index']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Docentes', 
+                    'url' => ['/docentes/index']
+                ],
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Carreras',
+                    'url' => ['/carreras/index']
+                ],
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Materias',
+                    'url' => ['/materias/index']
+                ],
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Empleados',
+                    'url' => ['/empleados/index']
+                ],
+                
+                
+            ],
+            
+        ];
+        
+        $menuItems[] = [
+            'label'=>Yii::t('app', 'Gestionar Inventario'),
+            'items'=>[
+                [
+                    'label' => 'Dar de alta',
+                     'url' => ['/inventario/index']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Dar de baja', 
+                    'url' => ['/bajas/index']
+                ],
+                
+            ],
+            
+        ];
+
+        $menuItems[] = [
+            'label'=>Yii::t('app', 'Gestionar Prestamos'),
+            'items'=>[
+                [
+                    'label' => 'Procesar prestamo',
+                     'url' => ['/prestamos/index']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Procesar devolución', 
+                    'url' => ['/devoluciones/index']
+                ],
+                
+            ],
+            
+        ];  
 
     }
     if(Yii::$app->user->can('privilegios-empleado')){
-        $menuItems[] = ['label' => 'Alumnos', 'url' => ['/alumnos/index']];
-        $menuItems[] = ['label' => 'Docentes', 'url' => ['/docentes/index']];
-        $menuItems[] = ['label' => 'Materias', 'url' => ['/materias/index']];
-        $menuItems[] = ['label' => 'Prestamos', 'url' => ['/prestamos/index']];
-        $menuItems[] = ['label' => 'Devoluciones', 'url' => ['/devoluciones/index']];
+
+        $menuItems[] = [
+            'label'=>Yii::t('app', 'Dar de alta'),
+            'items'=>[
+                [
+                    'label' => 'Alumnos',
+                     'url' => ['/alumnos/index']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Docentes', 
+                    'url' => ['/docentes/index']
+                ],
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Materias',
+                    'url' => ['/materias/index']
+                ],  
+                
+            ],
+            
+        ];
+        $menuItems[] = [
+            'label'=>Yii::t('app', 'Gestionar Prestamos'),
+            'items'=>[
+                [
+                    'label' => 'Procesar prestamo',
+                     'url' => ['/prestamos/index']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Procesar devolución', 
+                    'url' => ['/devoluciones/index']
+                ],
+                
+            ],
+            
+        ];  
 
 
     }
@@ -76,6 +173,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
+        'encodeLabels'=>false,
     ]);
     NavBar::end();
     ?>
