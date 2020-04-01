@@ -57,8 +57,7 @@ class PrestamosController extends Controller
             ]);
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
-    }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');    }
 
     /**
      * Displays a single Prestamos model.
@@ -91,8 +90,7 @@ class PrestamosController extends Controller
             ]);
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
-    }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');    }
 
     /**
      * Creates a new Prestamos model.
@@ -152,8 +150,7 @@ class PrestamosController extends Controller
             ]);
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
-    }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');    }
 
     /**
      * Updates an existing Prestamos model.
@@ -179,8 +176,7 @@ class PrestamosController extends Controller
             ]);
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
-    }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');    }
 
     /**
      * Deletes an existing Prestamos model.
@@ -200,7 +196,7 @@ class PrestamosController extends Controller
             return $this->redirect(['index']);
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
     }
 
     /**
@@ -216,225 +212,238 @@ class PrestamosController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('Favor de Iniciar Sesión');
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
     }
 
     public function actionDatos(){
         
-
-        /*    -------------------     PRIMER TABLA   -------------------    */
-        $sql = 'SELECT
-                alumnos.alumnoCarreraNombre as "Carrera",
-                COUNT(*) as Visitas
-            FROM prestamos
-            LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
-            GROUP BY Carrera';
-
-        $sqlProvider = new SqlDataProvider([
-            'sql'=>$sql,
+        if(Yii::$app->user->can('privilegios-admin'))
+        {
             
-            'sort'=>[
-                'defaultOrder'=> ['Visitas'=>SORT_DESC],
-               'attributes'=>['Carrera','Visitas']
-            
-            ],   
-        ]);
-
-            /*-------------------   SEGUNDA TABLA   ------------------- */
-        $sql2 = 'SELECT materialNombre as "Nombre del material",
-                 COUNT(*) as "Veces Prestado"
-            FROM materiales
-            GROUP BY materialNombre';
-
-        $sqlProvider2 = new SqlDataProvider([
-            'sql'=>$sql2,
-            'sort'=>[
-                'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
-               'attributes'=>[' Nombre del Material','Veces Prestado']
-            ],
-        ]);
-
-
-            /*-------------------   TERCERA TABLA   ------------------- */
-            $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
+            /*    -------------------     PRIMER TABLA   -------------------    */
+            $sql = 'SELECT
+                    alumnos.alumnoCarreraNombre as "Carrera",
+                    COUNT(*) as Visitas
+                FROM prestamos
+                LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
+                GROUP BY Carrera';
+    
+            $sqlProvider = new SqlDataProvider([
+                'sql'=>$sql,
+                
+                'sort'=>[
+                    'defaultOrder'=> ['Visitas'=>SORT_DESC],
+                   'attributes'=>['Carrera','Visitas']
+                
+                ],   
+            ]);
+    
+                /*-------------------   SEGUNDA TABLA   ------------------- */
+            $sql2 = 'SELECT materialNombre as "Nombre del material",
+                     COUNT(*) as "Veces Prestado"
+                FROM materiales
+                GROUP BY materialNombre';
+    
+            $sqlProvider2 = new SqlDataProvider([
+                'sql'=>$sql2,
+                'sort'=>[
+                    'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
+                   'attributes'=>[' Nombre del Material','Veces Prestado']
+                ],
+            ]);
+    
+    
+                /*-------------------   TERCERA TABLA   ------------------- */
+                $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
+                        COUNT(*) as "Visitas"
+                    FROM prestamos
+                    LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
+                    GROUP BY materias.materiaNombre';
+    
+                $sqlProvider3 = new SqlDataProvider([
+                    'sql'=>$sql3,
+                    'sort'=>[
+                        'defaultOrder'=>['Visitas'=>SORT_DESC],
+                        'attributes'=>['Nombre de Materia','Visitas']
+                    ],  
+                   
+                ]);
+    
+    
+                 /*-------------------   CUARTA TABLA   ------------------- */
+                    $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
                     COUNT(*) as "Visitas"
                 FROM prestamos
-                LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
-                GROUP BY materias.materiaNombre';
-
-            $sqlProvider3 = new SqlDataProvider([
-                'sql'=>$sql3,
-                'sort'=>[
-                    'defaultOrder'=>['Visitas'=>SORT_DESC],
-                    'attributes'=>['Nombre de Materia','Visitas']
-                ],  
-               
-            ]);
-
-
-             /*-------------------   CUARTA TABLA   ------------------- */
-                $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
-                COUNT(*) as "Visitas"
-            FROM prestamos
-            LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
-            GROUP BY docentes.docenteNombre';
-
-            $sqlProvider4 = new SqlDataProvider([
-                'sql'=>$sql4,
-                'sort'=>[
-                    'defaultOrder'=>['Visitas'=>SORT_DESC],
-                    'attributes'=>['Nombre del docente','Visitas']
-                ],
+                LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
+                GROUP BY docentes.docenteNombre';
+    
+                $sqlProvider4 = new SqlDataProvider([
+                    'sql'=>$sql4,
+                    'sort'=>[
+                        'defaultOrder'=>['Visitas'=>SORT_DESC],
+                        'attributes'=>['Nombre del docente','Visitas']
+                    ],
+                    
+                ]);       
                 
-            ]);       
+                return $this->render('datos',[
+                    'sqlProvider'=> $sqlProvider,
+                    'sqlProvider2'=>$sqlProvider2,
+                    'sqlProvider3'=>$sqlProvider3,
+                    'sqlProvider4'=>$sqlProvider4,
             
-            return $this->render('datos',[
-                'sqlProvider'=> $sqlProvider,
-                'sqlProvider2'=>$sqlProvider2,
-                'sqlProvider3'=>$sqlProvider3,
-                'sqlProvider4'=>$sqlProvider4,
-        
-               ]); 
-        
+                   ]); 
+        }
+        throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
     }
 
         public function actionGraficas(){
 
+            if(Yii::$app->user->can('privilegios-admin'))
+            {
+
+                $query1 = Prestamos::find()
+                ->select('alumnos.alumnoCarreraNombre as Carrera')
+                ->addSelect('count(*) as data')
+                ->innerJoin('alumnos','alumnos.noControl = prestamos.noControlAlumno')
+                ->groupBy('Carrera')
+                ->createCommand();
     
-          
-            $query1 = Prestamos::find()
-            ->select('alumnos.alumnoCarreraNombre as Carrera')
-            ->addSelect('count(*) as data')
-            ->innerJoin('alumnos','alumnos.noControl = prestamos.noControlAlumno')
-            ->groupBy('Carrera')
-            ->createCommand();
-
-
-            
-
-            $query2 = Materiales::find()
-            ->select('materialNombre')
-            ->addSelect('count(*) as data')
-            ->groupBy('materialNombre')
-            ->createCommand();
-
-            $query3 = Prestamos::find()
-            ->select('materias.materiaNombre as Materias')
-            ->addSelect('count(*) as data')
-            ->innerJoin('materias','materias.materiaID = prestamos.materiaID')
-            ->groupBy('Materias')
-            ->createCommand();
-
-            $query4 = Prestamos::find()
-            ->select('docentes.docenteNombre as Docentes')
-            ->addSelect('count(*) as data')
-            ->innerJoin('docentes','docentes.docenteID = prestamos.docenteID')
-            ->groupBy('Docentes')
-            ->createCommand();
-           
-
-          
-          
-            return $this->render('graficas',[
-                'query1'=>$query1,
-                'query2'=>$query2,
-                'query3'=>$query3,
-                'query4'=>$query4,
-            ]);
+    
+                
+    
+                $query2 = Materiales::find()
+                ->select('materialNombre')
+                ->addSelect('count(*) as data')
+                ->groupBy('materialNombre')
+                ->createCommand();
+    
+                $query3 = Prestamos::find()
+                ->select('materias.materiaNombre as Materias')
+                ->addSelect('count(*) as data')
+                ->innerJoin('materias','materias.materiaID = prestamos.materiaID')
+                ->groupBy('Materias')
+                ->createCommand();
+    
+                $query4 = Prestamos::find()
+                ->select('docentes.docenteNombre as Docentes')
+                ->addSelect('count(*) as data')
+                ->innerJoin('docentes','docentes.docenteID = prestamos.docenteID')
+                ->groupBy('Docentes')
+                ->createCommand();
+               
+    
+              
+              
+                return $this->render('graficas',[
+                    'query1'=>$query1,
+                    'query2'=>$query2,
+                    'query3'=>$query3,
+                    'query4'=>$query4,
+                ]);
+            }
+            throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
 
         }
 
         public function actionDatosPdf(){
-            /*    -------------------     PRIMER TABLA   -------------------    */
-        $sql = 'SELECT
-        alumnos.alumnoCarreraNombre as "Carrera",
-        COUNT(*) as Visitas
-    FROM prestamos
-    LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
-    GROUP BY Carrera';
 
-$sqlProvider = new SqlDataProvider([
-    'sql'=>$sql,
-    'sort'=>[
-        'defaultOrder'=> ['Visitas'=>SORT_DESC],
-       'attributes'=>['Carrera','Visitas']
-    
-    ],   
-]);
+            if(Yii::$app->user->can('privilegios-admin'))
+            {
 
-    /*-------------------   SEGUNDA TABLA   ------------------- */
-$sql2 = 'SELECT materialNombre as "Nombre del material",
-         COUNT(*) as "Veces Prestado"
-    FROM materiales
-    GROUP BY materialNombre';
-
-$sqlProvider2 = new SqlDataProvider([
-    'sql'=>$sql2,
-    'sort'=>[
-        'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
-       'attributes'=>[' Nombre del Material','Veces Prestado']
-    ],
-]);
-
-
-    /*-------------------   TERCERA TABLA   ------------------- */
-    $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
-            COUNT(*) as "Visitas"
-        FROM prestamos
-        LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
-        GROUP BY materias.materiaNombre';
-
-    $sqlProvider3 = new SqlDataProvider([
-        'sql'=>$sql3,
-        'sort'=>[
-            'defaultOrder'=>['Visitas'=>SORT_DESC],
-            'attributes'=>['Nombre de Materia','Visitas']
-        ],  
-       
-    ]);
-
-
-     /*-------------------   CUARTA TABLA   ------------------- */
-        $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
-        COUNT(*) as "Visitas"
-    FROM prestamos
-    LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
-    GROUP BY docentes.docenteNombre';
-
-    $sqlProvider4 = new SqlDataProvider([
-        'sql'=>$sql4,
-        'sort'=>[
-            'defaultOrder'=>['Visitas'=>SORT_DESC],
-            'attributes'=>['Nombre del docente','Visitas']
-        ],
-        
-    ]);
-
-    Yii::$app->response->format= Response::FORMAT_HTML;
-    $content = $this->renderpartial('datospdf',[
-        'sqlProvider'=> $sqlProvider,
-        'sqlProvider2'=>$sqlProvider2,
-        'sqlProvider3'=>$sqlProvider3,
-        'sqlProvider4'=>$sqlProvider4,
-
-       ]); 
-    /*------------------  SECCION EXPORTACION PDF      ------------------*/
-
-    $pdf = new Pdf([
-        'mode'=> Pdf::MODE_BLANK,
-        'destination'=>Pdf::DEST_BROWSER,
-        'content'=>$content,
-        'methods'=>[
-            'SetTitle' => 'Datos Tabulados PDF',
-            'SetHeader' => ['Reporte fin de ciclo escolar'],
-            'SetFooter' => ['|Página {PAGENO}|'],
-          
+                        /*    -------------------     PRIMER TABLA   -------------------    */
+                    $sql = 'SELECT
+                    alumnos.alumnoCarreraNombre as "Carrera",
+                    COUNT(*) as Visitas
+                FROM prestamos
+                LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
+                GROUP BY Carrera';
             
-        ]
+            $sqlProvider = new SqlDataProvider([
+                'sql'=>$sql,
+                'sort'=>[
+                    'defaultOrder'=> ['Visitas'=>SORT_DESC],
+                'attributes'=>['Carrera','Visitas']
+                
+                ],   
+            ]);
+            
+                /*-------------------   SEGUNDA TABLA   ------------------- */
+            $sql2 = 'SELECT materialNombre as "Nombre del material",
+                    COUNT(*) as "Veces Prestado"
+                FROM materiales
+                GROUP BY materialNombre';
+            
+            $sqlProvider2 = new SqlDataProvider([
+                'sql'=>$sql2,
+                'sort'=>[
+                    'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
+                'attributes'=>[' Nombre del Material','Veces Prestado']
+                ],
+            ]);
+            
+            
+                /*-------------------   TERCERA TABLA   ------------------- */
+                $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
+                        COUNT(*) as "Visitas"
+                    FROM prestamos
+                    LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
+                    GROUP BY materias.materiaNombre';
+            
+                $sqlProvider3 = new SqlDataProvider([
+                    'sql'=>$sql3,
+                    'sort'=>[
+                        'defaultOrder'=>['Visitas'=>SORT_DESC],
+                        'attributes'=>['Nombre de Materia','Visitas']
+                    ],  
+                
+                ]);
+            
+            
+                /*-------------------   CUARTA TABLA   ------------------- */
+                    $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
+                    COUNT(*) as "Visitas"
+                FROM prestamos
+                LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
+                GROUP BY docentes.docenteNombre';
+            
+                $sqlProvider4 = new SqlDataProvider([
+                    'sql'=>$sql4,
+                    'sort'=>[
+                        'defaultOrder'=>['Visitas'=>SORT_DESC],
+                        'attributes'=>['Nombre del docente','Visitas']
+                    ],
+                    
+                ]);
+            
+                Yii::$app->response->format= Response::FORMAT_HTML;
+                $content = $this->renderpartial('datospdf',[
+                    'sqlProvider'=> $sqlProvider,
+                    'sqlProvider2'=>$sqlProvider2,
+                    'sqlProvider3'=>$sqlProvider3,
+                    'sqlProvider4'=>$sqlProvider4,
+            
+                ]); 
+                /*------------------  SECCION EXPORTACION PDF      ------------------*/
+            
+                $pdf = new Pdf([
+                    'mode'=> Pdf::MODE_BLANK,
+                    'destination'=>Pdf::DEST_BROWSER,
+                    'content'=>$content,
+                    'methods'=>[
+                        'SetTitle' => 'Datos Tabulados PDF',
+                        'SetHeader' => ['Reporte fin de ciclo escolar'],
+                        'SetFooter' => ['|Página {PAGENO}|'],
+                    
+                        
+                    ]
+            
+                ]);
+            
+                return $pdf->render();
+            }
+            throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
 
-    ]);
-
-    return $pdf->render();
 
         }
 
