@@ -2,22 +2,19 @@
 
 namespace frontend\controllers;
 
+
 use Yii;
-use frontend\models\Materias;
 use frontend\models\Prestamos;
 use frontend\models\PrestamosSearch;
 use frontend\models\Materiales;
 use frontend\models\MaterialesSearch;
 use frontend\models\Model;
-use yii\data\ArrayDataProvider;
-use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
-use miloschuman\highcharts\SeriesDataHelper;
-use yii\db\Query;
-use yii\db\ActiveQuery;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use kartik\mpdf\Pdf;
 
 /**
  * PrestamosController implements the CRUD actions for Prestamos model.
@@ -224,8 +221,6 @@ class PrestamosController extends Controller
 
     public function actionDatos(){
         
-        
-            
 
         /*    -------------------     PRIMER TABLA   -------------------    */
         $sql = 'SELECT
@@ -271,7 +266,7 @@ class PrestamosController extends Controller
                 'sort'=>[
                     'defaultOrder'=>['Visitas'=>SORT_DESC],
                     'attributes'=>['Nombre de Materia','Visitas']
-                ],
+                ],  
                
             ]);
 
@@ -290,24 +285,17 @@ class PrestamosController extends Controller
                     'attributes'=>['Nombre del docente','Visitas']
                 ],
                 
-            ]);
-
-
+            ]);       
             
-        /*-----------------   RENDERIZA TABLAS EN EL ARCHIVO VIEW PRESTAMOS/REPORTE      ---------------- */
-        return $this->render('datos',[
-            'sqlProvider'=> $sqlProvider,
-            'sqlProvider2'=>$sqlProvider2,
-            'sqlProvider3'=>$sqlProvider3,
-            'sqlProvider4'=>$sqlProvider4,
-            
-            
-              
+            return $this->render('datos',[
+                'sqlProvider'=> $sqlProvider,
+                'sqlProvider2'=>$sqlProvider2,
+                'sqlProvider3'=>$sqlProvider3,
+                'sqlProvider4'=>$sqlProvider4,
         
+               ]); 
         
-        ]);
-
-            }
+    }
 
         public function actionGraficas(){
 
@@ -354,4 +342,101 @@ class PrestamosController extends Controller
             ]);
 
         }
+
+        public function actionDatosPdf(){
+            /*    -------------------     PRIMER TABLA   -------------------    */
+        $sql = 'SELECT
+        alumnos.alumnoCarreraNombre as "Carrera",
+        COUNT(*) as Visitas
+    FROM prestamos
+    LEFT JOIN alumnos ON prestamos.noControlAlumno = alumnos.noControl
+    GROUP BY Carrera';
+
+$sqlProvider = new SqlDataProvider([
+    'sql'=>$sql,
+    'sort'=>[
+        'defaultOrder'=> ['Visitas'=>SORT_DESC],
+       'attributes'=>['Carrera','Visitas']
+    
+    ],   
+]);
+
+    /*-------------------   SEGUNDA TABLA   ------------------- */
+$sql2 = 'SELECT materialNombre as "Nombre del material",
+         COUNT(*) as "Veces Prestado"
+    FROM materiales
+    GROUP BY materialNombre';
+
+$sqlProvider2 = new SqlDataProvider([
+    'sql'=>$sql2,
+    'sort'=>[
+        'defaultOrder'=> ['Veces Prestado'=>SORT_DESC],
+       'attributes'=>[' Nombre del Material','Veces Prestado']
+    ],
+]);
+
+
+    /*-------------------   TERCERA TABLA   ------------------- */
+    $sql3 = 'SELECT materias.materiaNombre as "Nombre de Materia",
+            COUNT(*) as "Visitas"
+        FROM prestamos
+        LEFT JOIN materias ON prestamos.materiaID = materias.materiaID
+        GROUP BY materias.materiaNombre';
+
+    $sqlProvider3 = new SqlDataProvider([
+        'sql'=>$sql3,
+        'sort'=>[
+            'defaultOrder'=>['Visitas'=>SORT_DESC],
+            'attributes'=>['Nombre de Materia','Visitas']
+        ],  
+       
+    ]);
+
+
+     /*-------------------   CUARTA TABLA   ------------------- */
+        $sql4 = 'SELECT docentes.docenteNombre as "Nombre del docente",
+        COUNT(*) as "Visitas"
+    FROM prestamos
+    LEFT JOIN docentes ON prestamos.docenteID = docentes.docenteID
+    GROUP BY docentes.docenteNombre';
+
+    $sqlProvider4 = new SqlDataProvider([
+        'sql'=>$sql4,
+        'sort'=>[
+            'defaultOrder'=>['Visitas'=>SORT_DESC],
+            'attributes'=>['Nombre del docente','Visitas']
+        ],
+        
+    ]);
+
+    Yii::$app->response->format= Response::FORMAT_HTML;
+    $content = $this->renderpartial('datospdf',[
+        'sqlProvider'=> $sqlProvider,
+        'sqlProvider2'=>$sqlProvider2,
+        'sqlProvider3'=>$sqlProvider3,
+        'sqlProvider4'=>$sqlProvider4,
+
+       ]); 
+    /*------------------  SECCION EXPORTACION PDF      ------------------*/
+
+    $pdf = new Pdf([
+        'mode'=> Pdf::MODE_BLANK,
+        'destination'=>Pdf::DEST_BROWSER,
+        'content'=>$content,
+        'methods'=>[
+            'SetTitle' => 'Datos Tabulados PDF',
+            'SetHeader' => ['Reporte fin de ciclo escolar'],
+            'SetFooter' => ['|Página {PAGENO}|'],
+          
+            
+        ]
+
+    ]);
+
+    return $pdf->render();
+
+        }
+
+       
+       
 }

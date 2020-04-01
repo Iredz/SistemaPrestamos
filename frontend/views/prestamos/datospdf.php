@@ -10,29 +10,13 @@ use frontend\models\Materiales;
 use yii\web\YiiAsset;
 
 
-
-$this->title= 'Sección Reporte de Préstamos';
-$this->params['breadcrumbs'][] = ['label' => 'Prestamos', 'url' => ['index']];
-$this->params['breadcrumbs'][]=$this->title;
-YiiAsset::register($this);
-
-?>
-<?php
-echo Html::a('<i class="fa far fa-hand-point-up"></i> Exportar a PDF', ['/prestamos/datos-pdf'], [
-    'class'=>'btn btn-danger', 
-    'target'=>'_blank', 
-    'data-toggle'=>'tooltip', 
-    'title'=>'Abrirá un PDF generado en otra ventana'
-]);
-
 ?>
 
-<!--    PRIMERA TABLA   -->
 <div>&emsp;</div>
 <h2 style="text-align: center;">Número de alumnos por carrera que visitaron el laboratorio</h2>
 
-
 <?php 
+
 echo GridView::widget([
     'dataProvider'=>$sqlProvider,
     'layout'=>'{items}{pager}',
@@ -105,5 +89,3 @@ echo GridView::widget([
         'neverTimeout'=>true,
     ],
 ]);?>
-
-
