@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
 use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
@@ -27,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'bordered'=>true,
         'striped'=>false,
         'hover'=>true,
+        'layout'=>'{items}{pager}',
         'pjax'=>true,
         'pjaxSettings'=>[
             'neverTimeout'=>true, 
