@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use frontend\models\MaterialesSearch;
-use yii\grid\GridView;
-
+use kartik\grid\GridView;
 
 
 
@@ -19,17 +17,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    
+
     <p>
         <?= Html::a('Procesar Prestamo', ['create'], ['class' => 'btn btn-success']) ?>
         
     </p>
-
-    <p>
-        <?=Html::a('Gráficas', ['graficas'], ['class' => 'btn btn-primary'])?>
-        <?= Html::a('Datos Tabulados', ['datos'], ['class' => 'btn btn-primary'])?>
-    
-    </p>
-
 
     
     <?php  //echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -38,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
         'layout'=>'{items}{pager}',
+        'pjax'=>true,
         'columns' => [
             [
             'class' => 'yii\grid\SerialColumn'],

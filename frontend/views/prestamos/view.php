@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 
 /* @var $this yii\web\View */
@@ -63,11 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <?php Pjax::begin()?>
+  
 
     <?= GridView::widget([
         'dataProvider'=>$dataProvider,
         // 'filterModel'=> $searchModel,
+        'layout'=>'{items}{pager}',
+        'pjax'=>true,
         'columns'=>[
             //   ['class'=>'yii\grid\SerialColumn'],
             'matID',
@@ -77,6 +79,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ]);?>
 
-    <?php Pjax::end();?>
+   
 
 </div>
