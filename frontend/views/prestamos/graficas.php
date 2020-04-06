@@ -16,10 +16,11 @@ $this->params['breadcrumbs'][]=$this->title;
 
 <?php
 
-
+/*  
+    Se obtienen las variables de la funcion actionGraficas
+*/
 echo Chart::widget([
     'type' => Chart::TYPE_BAR,
-    
     'datasets' => [
         [
           'query'=>$query1,

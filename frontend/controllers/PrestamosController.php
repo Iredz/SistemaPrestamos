@@ -302,15 +302,21 @@ class PrestamosController extends Controller
             if(Yii::$app->user->can('privilegios-admin'))
             {
 
+                /*  
+
+                Se crean las consultas SQL para las gráficas,
+                nombrar 'count(*)' como data es obligatorio,
+                o las gráficas no funcionarán correctamente, 
+                debido a los parametros impuestos por el 
+                desarrollador del widget de gráficas
+
+                */
                 $query1 = Prestamos::find()
                 ->select('alumnos.alumnoCarreraNombre as Carrera')
                 ->addSelect('count(*) as data')
                 ->innerJoin('alumnos','alumnos.noControl = prestamos.noControlAlumno')
                 ->groupBy('Carrera')
                 ->createCommand();
-    
-    
-                
     
                 $query2 = Materiales::find()
                 ->select('materialNombre')
@@ -334,7 +340,7 @@ class PrestamosController extends Controller
                
     
               
-              
+              /* Se regresan las variables al sitio graficas para su uso */
                 return $this->render('graficas',[
                     'query1'=>$query1,
                     'query2'=>$query2,
@@ -350,6 +356,15 @@ class PrestamosController extends Controller
 
             if(Yii::$app->user->can('privilegios-admin'))
             {
+
+
+                /*
+                    Para exportar los datos tabulados a PDF,
+                    se hace casi una copa exacta de la funcion actionDatos,
+                    con unas pocas diferencias que se explicarán más adelante
+                
+                */
+
 
                         /*    -------------------     PRIMER TABLA   -------------------    */
                     $sql = 'SELECT
@@ -416,6 +431,17 @@ class PrestamosController extends Controller
                     
                 ]);
             
+
+                /*
+
+                 A diferencia de las demás veces que se regresan las variables,
+                 para su uso, se les asigna a la variable $content,
+                  para poder ser usado por el widget exportador a PDF,
+                 se usa una renderiación parcial y no normal, ya que solo se requiere
+                 exclusivamente los datos tabulados, de caso contrario, se exportaría 
+                 el sitio de gráficas completo junto con las migajas de pan (bread crumbs).
+
+                */
                 Yii::$app->response->format= Response::FORMAT_HTML;
                 $content = $this->renderpartial('datospdf',[
                     'sqlProvider'=> $sqlProvider,
@@ -439,7 +465,8 @@ class PrestamosController extends Controller
                     ]
             
                 ]);
-            
+                    
+                // Se regresa la renderización en formato PDF
                 return $pdf->render();
             }
             throw new NotFoundHttpException('Favor de Iniciar Sesión con las credenciales correctas');
