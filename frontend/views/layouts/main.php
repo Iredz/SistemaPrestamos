@@ -43,7 +43,7 @@ AppAsset::register($this);
         
         
         $menuItems[] = [
-            'label'=>Yii::t('app', 'Dar de alta'),
+            'label'=>Yii::t('app', 'Gestionar altas'),
             'items'=>[
                 [
                     'label' => 'Alumnos',
@@ -80,13 +80,13 @@ AppAsset::register($this);
             'label'=>Yii::t('app', 'Gestionar Inventario'),
             'items'=>[
                 [
-                    'label' => 'Dar de alta',
+                    'label' => 'Altas',
                      'url' => ['/inventario/index']
                 ],
 
                 '<li class="divider"></li>',
                 [
-                    'label' => 'Dar de baja', 
+                    'label' => 'Bajas', 
                     'url' => ['/bajas/index']
                 ],
                 
@@ -98,25 +98,41 @@ AppAsset::register($this);
             'label'=>Yii::t('app', 'Gestionar Prestamos'),
             'items'=>[
                 [
-                    'label' => 'Procesar prestamo',
+                    'label' => 'Prestamo',
                      'url' => ['/prestamos/index']
                 ],
 
                 '<li class="divider"></li>',
                 [
-                    'label' => 'Procesar devolución', 
+                    'label' => 'Devolución', 
                     'url' => ['/devoluciones/index']
                 ],
-                
             ],
             
         ];  
+
+        $menuItems[]=[
+            'label'=>Yii::t('app', 'Gestionar Reportes'),
+            'items'=>[
+                [
+                    'label' => 'Datos tabulados', 
+                    'url' => ['/prestamos/datos']
+                ],
+
+                '<li class="divider"></li>',
+                [
+                    'label' => 'Gráficas', 
+                    'url' => ['/prestamos/graficas']
+                ],
+
+            ],
+        ];
 
     }
     if(Yii::$app->user->can('privilegios-empleado')){
 
         $menuItems[] = [
-            'label'=>Yii::t('app', 'Dar de alta'),
+            'label'=>Yii::t('app', 'Gestionar altas'),
             'items'=>[
                 [
                     'label' => 'Alumnos',
@@ -141,13 +157,13 @@ AppAsset::register($this);
             'label'=>Yii::t('app', 'Gestionar Prestamos'),
             'items'=>[
                 [
-                    'label' => 'Procesar prestamo',
+                    'label' => 'Prestamo',
                      'url' => ['/prestamos/index']
                 ],
 
                 '<li class="divider"></li>',
                 [
-                    'label' => 'Procesar devolución', 
+                    'label' => 'Devolución', 
                     'url' => ['/devoluciones/index']
                 ],
                 
