@@ -15,6 +15,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 use kartik\mpdf\Pdf;
+use yii\db\Command;
+use yii\db\Connection;
+
 
 /**
  * PrestamosController implements the CRUD actions for Prestamos model.
@@ -474,4 +477,22 @@ class PrestamosController extends Controller
 
         }
 
+        public function actionBorrarTablas(){
+
+                Yii::$app->db->createCommand()->checkIntegrity(false)->execute();
+                Yii::$app->db->createCommand()->truncateTable('prestamos')->execute();
+                Yii::$app->db->createCommand()->truncateTable('alumnos')->execute();
+                Yii::$app->db->createCommand()->truncateTable('materias')->execute();
+                Yii::$app->db->createCommand()->truncateTable('docentes')->execute();
+                Yii::$app->db->createCommand()->truncateTable('empleados')->execute();
+                Yii::$app->db->createCommand()->truncateTable('materiales')->execute();
+                Yii::$app->db->createCommand()->truncateTable('devoluciones')->execute();
+                Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
+            
+                return $this->redirect(['datos']);
+         }
+ 
+
 }
+
+
