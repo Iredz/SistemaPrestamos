@@ -45,10 +45,10 @@ class Devoluciones extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'alumnoNoControl' => 'Alumno No Control',
-            'alumnoNombre' => 'Alumno Nombre',
-            'recibeNombre' => 'Recibe Nombre',
+            'id' => 'ID del alumno',
+            'alumnoNoControl' => 'No. control del alumno',
+            'alumnoNombre' => 'Nombre del alumno',
+            'recibeNombre' => 'Nombre de quien recibe el material',
             'observaciones' => 'Observaciones',
         ];
     }

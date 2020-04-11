@@ -56,24 +56,24 @@ class DevolucionesController extends Controller
     public function actionView($id)
     {
 
-     /*
+     
         $model = $this->findModel($id);
-        $modelsMaterialDevuelto=$model->materialdevuelto;
+        $modelsMaterialDevuelto=$model->materialDevueltos;
 
         $searchModel = new MaterialDevueltoSearch();
         $searchModel->dev_id= $model ->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-*/
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+           // 'model' => $this->findModel($id),
             
-        /*
+        
         'model'=>$model,
-        'materialdevuelto'=> $materialdevuelto,
+        'modelsMaterialDevuelto'=> $modelsMaterialDevuelto,
         'searchModel'=> $searchModel,
         'dataProvider'=> $dataProvider,
         
-        */
+        
 
 
 

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\widgets\DetailView;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Devoluciones */
@@ -32,6 +32,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'observaciones:ntext',
         ],
     ]) ?>
+
+    <?= GridView::widget([
+        'dataProvider'=>$dataProvider,
+        // 'filterModel'=> $searchModel,
+        'layout'=>'{items}{pager}',
+        'pjax'=>true,
+        'columns'=>[
+            //   ['class'=>'yii\grid\SerialColumn'],
+            'matID',
+            'materialNombre',
+        ],
+
+
+    ]);?>
+    
 
 
 
