@@ -487,6 +487,7 @@ class PrestamosController extends Controller
                 Yii::$app->db->createCommand()->truncateTable('empleados')->execute();
                 Yii::$app->db->createCommand()->truncateTable('materiales')->execute();
                 Yii::$app->db->createCommand()->truncateTable('devoluciones')->execute();
+                Yii::$app->db->createCommand('UPDATE inventario SET estatus = "D" WHERE estatus = "P"')->execute(); 
                 Yii::$app->db->createCommand()->checkIntegrity(true)->execute();
             
                 return $this->redirect(['datos']);
