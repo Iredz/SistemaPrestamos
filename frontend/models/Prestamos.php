@@ -50,9 +50,9 @@ class Prestamos extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'noControlAlumno' => 'No. Control del Alumno',
-            'nombreAlumno' => 'Nombre del Alumno',
+            'id' => 'ID del alumno',
+            'noControlAlumno' => 'No. control del alumno',
+            'nombreAlumno' => 'Nombre del alumno',
             'materiaID' => 'Materia',
             'docenteID' => 'Docente',
             'periodo' => 'Periodo',

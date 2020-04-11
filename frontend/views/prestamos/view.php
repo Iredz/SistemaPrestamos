@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                     'attribute' => 'id',
-                    'label' => 'ID del Estudiante'
+                   
             ],
 
             'noControlAlumno',
